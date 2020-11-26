@@ -1,0 +1,12 @@
+{
+	"name": "1_robot",
+    "obstacles": [
+      [3,3]
+    ],
+    "starts": [
+      [0, 0]
+    ],
+    "targets": [
+      [1, 1]
+    ]
+}
