@@ -1,6 +1,6 @@
 from verifier import Verifier
 import sys
-from gui.gui import GUI, QtCore, QtGui, QtWidgets
+from gui.gui import GUI, QtCore, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QColor
 import read_scene

@@ -1,8 +1,6 @@
-import numpy as np
 import read_scene
 import networkx as nx
-import sys
-from project_inputs.solvers.Robot import Robot
+from src.robot import Robot
 
 
 def update_graph(grid):
