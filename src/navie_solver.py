@@ -1,5 +1,6 @@
-import read_scene
 import networkx as nx
+
+from resources.teacher_example_solver import read_scene
 from src.robot import Robot
 
 
@@ -9,7 +10,8 @@ def update_graph(grid):
     """
     return None
 
-def move_robot(robot,invalid_positions):
+
+def move_robot(robot, invalid_positions):
     """
     need to calculate shortest path +
     update robot current pos +
@@ -17,14 +19,17 @@ def move_robot(robot,invalid_positions):
     """
     return None
 
+
 def sort_robots(robots):
     return sorted(robots, key=lambda robot: robot.distance)
+
 
 def calculate_distance(robots):
     for robot in robots:
         target_pos = robot.target_pos
         start_pos = robot.start_pos
-        robot.distance = (int)(abs(target_pos[0]-start_pos[0]) + abs(target_pos[1]-start_pos[1]))
+        robot.distance = (int)(abs(target_pos[0] - start_pos[0]) + abs(target_pos[1] - start_pos[1]))
+
 
 def solve(infile: str, outfile: str):
     scene, name = read_scene.read_scene(infile)
@@ -46,24 +51,18 @@ def solve(infile: str, outfile: str):
     min_y = min(a[1] for a in all_points)
     max_y = max(a[1] for a in all_points)
 
-    grid = [(x, y) for x in range(min_x-1, max_x+2) for y in range(min_y-1, max_y+2)]
+    grid = [(x, y) for x in range(min_x - 1, max_x + 2) for y in range(min_y - 1, max_y + 2)]
     G = nx.Graph()
 
-    flag= True
-    moves=[]  # a data structure to hold all the moves for each robot
-    while flag: #while not all robots finished
-        for prior_index in range(len(robots)): #move each robot accordingly to its priority
+    flag = True
+    moves = []  # a data structure to hold all the moves for each robot
+    while flag:  # while not all robots finished
+        for prior_index in range(len(robots)):  # move each robot accordingly to its priority
             move_robot(robots[prior_index], invalid_positions)
             update_graph(grid)
 
-    #after the algorithm finished, we should write the moves data structure to json file.
-
-
-
-
-
+    # after the algorithm finished, we should write the moves data structure to json file.
 
 
 if __name__ == "__main__":
-    if __name__ == "__main__":
-        solve(infile='scene_2.json', outfile='scene_2_sol.json')
+    solve(infile='../tests/inputs/scene_2.json', outfile='../tests/outputs/scene_2.json')
