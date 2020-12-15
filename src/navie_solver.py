@@ -73,4 +73,5 @@ def solve(infile: str, outfile: str):
 
 
 if __name__ == "__main__":
-    solve(infile='../tests/inputs/scene_2.json', outfile='../tests/outputs/scene_2.json')
+    solve(infile='../tests/inputs/scene_5.json', outfile='../tests/outputs/scene_5.json')
+
