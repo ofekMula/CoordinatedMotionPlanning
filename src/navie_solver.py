@@ -1,4 +1,12 @@
 import utils
+import os
+import time
+
+from logbook import Logger, StreamHandler
+import sys
+
+StreamHandler(sys.stdout).push_application()
+log: Logger
 
 
 def calc_robot_next_step(robot, invalid_positions):
@@ -48,30 +56,45 @@ def move_robot(robot, robot_next_pos, invalid_positions):
 
 
 def is_not_finished(robots):
-    return all(robot.current_pos == robot.target_pos for robot in robots)
+    log.debug(f'Finished robots: {sum(robot.current_pos == robot.target_pos for robot in robots)}/{len(robots)}')
+    return not all(robot.current_pos == robot.target_pos for robot in robots)
+
+
+def is_not_stuck(steps):
+    if len(steps) > 0 and len(steps[-1]) == 0:
+        return False
+    return True
 
 
 def solve(infile: str, outfile: str):
+    start_time = time.time()
     robots, obstacles, name = utils.read_scene(infile)
+    global log
+    log = Logger(name)
     invalid_positions = set(obstacles).union(set(robot.current_pos for robot in robots))
 
     update_robots_distances(robots)
     robots = sort_robots(robots)
     steps = []  # a data structure to hold all the moves for each robot
     step_number = 0
-    while not is_not_finished(robots):  # while not all robots finished
+    while is_not_finished(robots) and is_not_stuck(steps):  # while not all robots finished
         steps.append(dict())
         for robot in robots:  # move each robot accordingly to its priority
             robot_next_pos, robot_step = calc_robot_next_step(robot, invalid_positions)
             move_robot(robot, robot_next_pos, invalid_positions)
             if robot_step:
                 steps[step_number][str(robot.index)] = robot_step
+                log.debug(f'step_number={step_number}, robot={robot.index}, move={robot_step}')
         step_number += 1
 
     # after the algorithm finished, we should write the moves data structure to json file.
-    utils.write_solution(steps, name, outfile)
+    if not is_not_finished(robots):
+        utils.write_solution(steps, name, outfile)
+        log.info(f'{os.path.split(file_name)[1]}: {time.time() - start_time}s')
+    else:
+        log.warn(f'{os.path.split(file_name)[1]}: IS STUCK AFTER {time.time() - start_time}s')
 
 
 if __name__ == "__main__":
-    solve(infile='../tests/inputs/scene_5.json', outfile='../tests/outputs/scene_5.json')
-
+    for file_name in os.listdir('../tests/inputs/'):
+        solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
