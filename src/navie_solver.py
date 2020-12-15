@@ -2,10 +2,12 @@ import utils
 import os
 import time
 
-from logbook import Logger, StreamHandler
+from logbook import Logger
 import sys
 
-StreamHandler(sys.stdout).push_application()
+from logbook_utils import ColoredStreamHandler
+
+ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
 
 
@@ -90,9 +92,9 @@ def solve(infile: str, outfile: str):
     # after the algorithm finished, we should write the moves data structure to json file.
     utils.write_solution(steps, name, outfile)
     if not is_not_finished(robots):
-        log.info(f'{os.path.split(file_name)[1]}: {time.time() - start_time}s')
+        log.info(f'Finished! {time.time() - start_time}s')
     else:
-        log.warn(f'{os.path.split(file_name)[1]}: IS STUCK AFTER {time.time() - start_time}s')
+        log.warn(f'Stuck! {time.time() - start_time}s')
 
 
 if __name__ == "__main__":
