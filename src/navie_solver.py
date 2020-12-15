@@ -70,7 +70,7 @@ def solve(infile: str, outfile: str):
     start_time = time.time()
     robots, obstacles, name = utils.read_scene(infile)
     global log
-    log = Logger(name)
+    log = Logger(os.path.split(file_name)[1])
     invalid_positions = set(obstacles).union(set(robot.current_pos for robot in robots))
 
     update_robots_distances(robots)
