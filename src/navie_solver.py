@@ -88,8 +88,8 @@ def solve(infile: str, outfile: str):
         step_number += 1
 
     # after the algorithm finished, we should write the moves data structure to json file.
+    utils.write_solution(steps, name, outfile)
     if not is_not_finished(robots):
-        utils.write_solution(steps, name, outfile)
         log.info(f'{os.path.split(file_name)[1]}: {time.time() - start_time}s')
     else:
         log.warn(f'{os.path.split(file_name)[1]}: IS STUCK AFTER {time.time() - start_time}s')
