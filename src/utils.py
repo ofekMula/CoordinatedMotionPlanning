@@ -14,6 +14,7 @@ def read_scene(scene_path: str):
 
 DIRECTION_TO_VECTOR = {'up': (0, 1), 'right': (1, 0), 'down': (0, -1), 'left': (-1, 0), 'halt': (0, 0)}
 STEP_DIRECTION = {'up': 'N', 'right': 'E', 'down': 'S', 'left': 'W'}
+STEP_DIRECTION_REVERSED = {'N': 'up', 'E': 'right', 'S': 'down', 'W': 'left', None: None}
 
 
 def calc_next_pos(location, direction):
