@@ -1,5 +1,6 @@
 import json
 
+from navie_solver import RIGHT, DOWN, LEFT, UP, HALT
 from robot import Robot
 
 
@@ -12,9 +13,7 @@ def read_scene(scene_path: str):
     return robots, obstacles, scene['name']
 
 
-DIRECTION_TO_VECTOR = {'up': (0, 1), 'right': (1, 0), 'down': (0, -1), 'left': (-1, 0), 'halt': (0, 0)}
-STEP_DIRECTION = {'up': 'N', 'right': 'E', 'down': 'S', 'left': 'W'}
-STEP_DIRECTION_REVERSED = {'N': 'up', 'E': 'right', 'S': 'down', 'W': 'left', None: None}
+DIRECTION_TO_VECTOR = {UP: (0, 1), RIGHT: (1, 0), DOWN: (0, -1), LEFT: (-1, 0), HALT: (0, 0)}
 
 
 def calc_next_pos(location, direction):

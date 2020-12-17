@@ -2,42 +2,31 @@ import networkx as nx
 import utils
 import os
 import time
-from logbook import Logger
+from logbook import Logger, INFO
 import sys
 from logbook_utils import ColoredStreamHandler
-from occupied import Occupied
+from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED
+
+UP = 'N'
+DOWN = 'S'
+RIGHT = 'E'
+LEFT = 'W'
+HALT = 'halt'
 
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
 
 
 def calc_robot_next_step(robot, invalid_positions):
-
     go_right = (robot.target_pos[0] - robot.current_pos[0]) > 0
     go_up = (robot.target_pos[1] - robot.current_pos[1]) > 0
     go_left = (robot.target_pos[0] - robot.current_pos[0]) < 0
     go_down = (robot.target_pos[1] - robot.current_pos[1]) < 0
-    if go_right:
-        right_pos = utils.calc_next_pos(robot.current_pos, 'right')
-        if right_pos not in invalid_positions or (right_pos in invalid_positions and
-                                                  invalid_positions[right_pos].direction == 'right'):
-            return right_pos, utils.STEP_DIRECTION['right']
-    if go_left:
-        left_pos = utils.calc_next_pos(robot.current_pos, 'left')
-        if left_pos not in invalid_positions or (left_pos in invalid_positions and
-                                                 invalid_positions[left_pos].direction == 'left'):
-            return left_pos, utils.STEP_DIRECTION['left']
-    if go_up:
-        up_pos = utils.calc_next_pos(robot.current_pos, 'up')
-        if up_pos not in invalid_positions or (up_pos in invalid_positions and
-                                               invalid_positions[up_pos].direction == 'up'):
-            return up_pos, utils.STEP_DIRECTION['up']
-    if go_down:
-        down_pos = utils.calc_next_pos(robot.current_pos, 'down')
-        if down_pos not in invalid_positions or (down_pos in invalid_positions and
-                                                 invalid_positions[down_pos].direction == 'down'):
-            return down_pos, utils.STEP_DIRECTION['down']
-
+    for go_condition, go_direction in zip([go_right, go_left, go_up, go_down], [RIGHT, LEFT, UP, DOWN]):
+        if go_condition:
+            next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
+            if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
+                return next_pos, go_direction
     return robot.current_pos, None
 
 
@@ -83,19 +72,18 @@ def create_graph(robots, obstacles):
 def clean_invalid_position(invalid_positions):
     positions_to_clean = []
     for pos in invalid_positions:
-        if invalid_positions[pos].direction is not None and invalid_positions[pos].is_temp == 1:
+        if invalid_positions[pos].direction and invalid_positions[pos].occupied_type == TEMPORARY_OCCUPIED:
             positions_to_clean.append(pos)
     for pos in positions_to_clean:
         del invalid_positions[pos]
 
 
 def move_robot(robot, robot_next_pos, invalid_positions, direction):
-    is_temp = 0
-    invalid_positions[robot.current_pos].direction = utils.STEP_DIRECTION_REVERSED[direction]
+    # The order of these lines are important
+    invalid_positions[robot.current_pos].direction = direction
     robot.current_pos = robot_next_pos
-    if robot.current_pos != robot.target_pos:
-        is_temp = 1
-    invalid_positions[robot.current_pos] = Occupied(is_temp, None)
+    occupied_type = PERMANENT_OCCUPIED if robot.current_pos == robot.target_pos else TEMPORARY_OCCUPIED
+    invalid_positions[robot.current_pos] = Occupied(occupied_type, None)
 
 
 def is_not_finished(robots):
@@ -112,17 +100,19 @@ def is_not_stuck(steps):
 def load_occupied_positions(robots, obstacles_pos):
     invalid_positions = dict()
     for obstacle in obstacles_pos:
-        invalid_positions[obstacle] = Occupied(0, None)
+        invalid_positions[obstacle] = Occupied(PERMANENT_OCCUPIED, None)
     for robot in robots:
-        invalid_positions[robot.current_pos] = (Occupied(1, None))
+        invalid_positions[robot.current_pos] = (Occupied(TEMPORARY_OCCUPIED, None))
     return invalid_positions
 
 
 def solve(infile: str, outfile: str):
-    start_time = time.time()
-    robots, obstacles, name = utils.read_scene(infile)
     global log
-    log = Logger(os.path.split(file_name)[1])
+    log = Logger(os.path.split(infile)[1], level=INFO)
+    log.info('Started!')
+    start_time = time.time()
+
+    robots, obstacles, name = utils.read_scene(infile)
     invalid_positions = load_occupied_positions(robots, obstacles)
     graph = create_graph(robots, obstacles)
     update_robots_distances(robots, graph)
@@ -130,13 +120,13 @@ def solve(infile: str, outfile: str):
     steps = []  # a data structure to hold all the moves for each robot
     step_number = 0
     while is_not_finished(robots) and is_not_stuck(steps):  # while not all robots finished
-        steps.append(dict())  # each step holds dictionary <robot_index,robot_step>
+        steps.append(dict())  # each step holds dictionary <robot_index,next_direction>
         for robot in robots:  # move each robot accordingly to its priority
-            robot_next_pos, robot_step = calc_robot_next_step(robot, invalid_positions)
-            move_robot(robot, robot_next_pos, invalid_positions, robot_step)
-            if robot_step:
-                steps[step_number][str(robot.index)] = robot_step
-                log.debug(f'step_number={step_number}, robot={robot.index}, move={robot_step}')
+            next_pos, next_direction = calc_robot_next_step(robot, invalid_positions)
+            move_robot(robot, next_pos, invalid_positions, next_direction)
+            if next_direction:
+                steps[step_number][str(robot.index)] = next_direction
+                log.debug(f'step_number={step_number}, robot={robot.index}, move={next_direction}')
         clean_invalid_position(invalid_positions)
         step_number += 1
 
@@ -148,8 +138,12 @@ def solve(infile: str, outfile: str):
         log.warn(f'Stuck! {time.time() - start_time}s')
 
 
-if __name__ == "__main__":
+def main():
     for file_name in os.listdir('../tests/inputs/'):
         solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-#    file_name = 'simple_election.json'
-#   solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    # file_name = 'simple_election.json'
+    # solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+
+
+if __name__ == "__main__":
+    main()
