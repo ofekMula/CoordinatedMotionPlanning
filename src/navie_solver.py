@@ -146,6 +146,8 @@ def solve(infile: str, outfile: str):
 def main():
     metadata = dict()
     for file_name in os.listdir('../tests/inputs/'):
+        if file_name.startswith('large'):
+            continue
         metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
     # file_name = 'simple_election.json'
