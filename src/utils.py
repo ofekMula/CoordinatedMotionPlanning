@@ -1,7 +1,11 @@
 import json
-
-from navie_solver import RIGHT, DOWN, LEFT, UP, HALT
 from robot import Robot
+
+UP = 'N'
+DOWN = 'S'
+RIGHT = 'E'
+LEFT = 'W'
+HALT = 'halt'
 
 
 def read_scene(scene_path: str):
@@ -23,3 +27,8 @@ def calc_next_pos(location, direction):
 def write_solution(steps, name, outfile):
     with open(outfile, 'w') as f:
         f.write(json.dumps({"instance": name, "steps": steps}, indent=4))
+
+
+def write_metadata(metadata):
+    with open('../tests/actual_metadata.json', 'w') as f:
+        f.write(json.dumps(metadata, indent=4))

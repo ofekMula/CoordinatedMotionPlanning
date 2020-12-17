@@ -6,12 +6,7 @@ from logbook import Logger, INFO
 import sys
 from logbook_utils import ColoredStreamHandler
 from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED
-
-UP = 'N'
-DOWN = 'S'
-RIGHT = 'E'
-LEFT = 'W'
-HALT = 'halt'
+from utils import RIGHT, DOWN, LEFT, UP
 
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
@@ -42,6 +37,7 @@ def update_robots_distances(robots, graph):
         if nx.has_path(graph, current_pos, target_pos):
             sp = nx.shortest_path(graph, current_pos, target_pos)
             robot.distance = len(sp) - 1
+    return sum(map(lambda r: r.distance, robots))
 
 
 def create_graph(robots, obstacles):
@@ -109,16 +105,17 @@ def load_occupied_positions(robots, obstacles_pos):
 def solve(infile: str, outfile: str):
     global log
     log = Logger(os.path.split(infile)[1], level=INFO)
-    log.info('Started!')
     start_time = time.time()
 
     robots, obstacles, name = utils.read_scene(infile)
     invalid_positions = load_occupied_positions(robots, obstacles)
     graph = create_graph(robots, obstacles)
-    update_robots_distances(robots, graph)
+    remained_distance = update_robots_distances(robots, graph)
+    log.info(f'Started! {remained_distance} distance')
     robots = sort_robots(robots)
     steps = []  # a data structure to hold all the moves for each robot
     step_number = 0
+    total_moves = 0
     while is_not_finished(robots) and is_not_stuck(steps):  # while not all robots finished
         steps.append(dict())  # each step holds dictionary <robot_index,next_direction>
         for robot in robots:  # move each robot accordingly to its priority
@@ -127,20 +124,30 @@ def solve(infile: str, outfile: str):
             if next_direction:
                 steps[step_number][str(robot.index)] = next_direction
                 log.debug(f'step_number={step_number}, robot={robot.index}, move={next_direction}')
+                total_moves += 1
         clean_invalid_position(invalid_positions)
         step_number += 1
 
     # after the algorithm finished, we should write the moves data structure to json file.
     utils.write_solution(steps, name, outfile)
+
+    remained_distance = update_robots_distances(robots, graph)
+    total_time = time.time() - start_time
     if not is_not_finished(robots):
-        log.info(f'Finished! {time.time() - start_time}s')
+        log.info(f'Finished! {total_time}s, {step_number} steps, {total_moves} moves, {remained_distance} distance')
+        return {'succeed': True, 'total_time': total_time, 'number_of_steps': step_number,
+                'number_of_moves': total_moves, 'remained_distance': remained_distance}
     else:
-        log.warn(f'Stuck! {time.time() - start_time}s')
+        log.warn(f'Stuck! {total_time}s, {step_number} steps, {total_moves} moves, {remained_distance} distance')
+        return {'succeed': False, 'total_time': total_time, 'number_of_steps': step_number,
+                'number_of_moves': total_moves, 'remained_distance': remained_distance}
 
 
 def main():
+    metadata = dict()
     for file_name in os.listdir('../tests/inputs/'):
-        solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+        metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    utils.write_metadata(metadata)
     # file_name = 'simple_election.json'
     # solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
 
