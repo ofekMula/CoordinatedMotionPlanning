@@ -41,10 +41,10 @@ def test_all_inputs():
         expected = expected_metadata[scene]
         if expected['succeed']:
             assert actual['succeed'], f'scene {scene} failed'
+            assert actual['number_of_moves'] <= expected['number_of_moves'], \
+                f'scene {scene} number of moves is longer than expected'
+            assert actual['number_of_steps'] <= expected['number_of_steps'], \
+                f'scene {scene} number of steps is longer than expected'
         assert actual['total_time'] < expected['total_time'] + 1, f'scene {scene} time is longer than expected'
-        assert actual['number_of_steps'] <= expected['number_of_steps'], \
-            f'scene {scene} number of steps is longer than expected'
-        assert actual['number_of_moves'] <= expected['number_of_moves'], \
-            f'scene {scene} number of moves is longer than expected'
         assert actual['remained_distance'] <= expected['remained_distance'], \
             f'scene {scene} remained distance is longer than expected'

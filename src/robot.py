@@ -8,8 +8,10 @@ class Robot:
         target_pos - target position for thr robot to be in the end.(tuple)
 
     """
+
     def __init__(self, index, current_pos, target_pos):
         self.index = index
         self.target_pos = target_pos
         self.current_pos = current_pos
         self.distance = 0
+        self.prev_pos = None
