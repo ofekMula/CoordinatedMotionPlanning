@@ -75,7 +75,7 @@ def only_prev_valid(robot,invalid_positions,prev_direction):
     return True
 
 
-def calc_robot_next_step(robot, invalid_positions, stuck, grid):
+def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
 
     go_right = (robot.target_pos[0] - robot.current_pos[0]) > 0
     go_up = (robot.target_pos[1] - robot.current_pos[1]) > 0
@@ -123,6 +123,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, grid):
 
         # if stuck:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
+        #         grid = create_grid(stuck_robots,invalid_positions)
         #         g = create_graph(grid, invalid_positions) #build a new graph.
         #         sp = calc_stuck_robot_next_steps(robot, g) # find its shortest path
         #         if len(sp)>1:
@@ -200,7 +201,7 @@ def load_occupied_positions(robots, obstacles_pos):
 
 
 def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, stuck,grid):
-    next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck,grid)
+    next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck,stuck_robots)
     if next_direction:
         move_robot(robot, next_pos, invalid_positions, next_direction)
         steps[step_number][str(robot.index)] = next_direction
@@ -241,7 +242,6 @@ def solve(infile: str, outfile: str):
 
         robots = [r for r in robots if r not in stuck_robots] + stuck_robots
         clean_invalid_position(invalid_positions)
-        grid = create_grid(stuck_robots, invalid_positions.keys())
         step_number += 1
 
 
