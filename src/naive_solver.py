@@ -103,6 +103,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, grid):
                     return next_pos, go_direction
             if next_pos in invalid_positions and invalid_positions[next_pos].direction is not None:
                 stay = True
+
     if not stay:
         for go_condition, go_direction in zip([try_up, try_left, try_down, try_right], [UP, LEFT, DOWN, RIGHT]):
             if go_condition:
@@ -111,12 +112,15 @@ def calc_robot_next_step(robot, invalid_positions, stuck, grid):
                 if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
                     if next_pos != robot.prev_pos:
                         return next_pos, go_direction
+
         for direction in directions_to_check:
             go_direction = utils.OPPOSING_DIRECTION[direction]
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
             if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
                 if next_pos != robot.prev_pos:
                     return next_pos, go_direction
+
+
         # if stuck:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
         #         g = create_graph(grid, invalid_positions) #build a new graph.
