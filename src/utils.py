@@ -18,7 +18,7 @@ def read_scene(scene_path: str):
 
 
 DIRECTION_TO_VECTOR = {UP: (0, 1), RIGHT: (1, 0), DOWN: (0, -1), LEFT: (-1, 0), HALT: (0, 0)}
-
+VECTOR_TO_DIRECTION = { (0, 1):UP, (1, 0):RIGHT, (0, -1):DOWN, (-1, 0):LEFT,  (0, 0):HALT}
 
 def calc_next_pos(location, direction):
     return location[0] + DIRECTION_TO_VECTOR[direction][0], location[1] + DIRECTION_TO_VECTOR[direction][1]

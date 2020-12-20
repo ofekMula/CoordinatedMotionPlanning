@@ -15,3 +15,4 @@ class Robot:
         self.current_pos = current_pos
         self.distance = 0
         self.prev_pos = None
+        self.path =[]
