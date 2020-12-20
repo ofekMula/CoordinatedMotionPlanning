@@ -1,6 +1,6 @@
 import pytest
 import json
-import navie_solver
+import naive_solver
 
 actual_metadata: dict
 expected_metadata: dict
@@ -8,7 +8,7 @@ expected_metadata: dict
 
 @pytest.fixture(autouse=True, scope='module')
 def run_code():
-    navie_solver.main()
+    naive_solver.main()
     global actual_metadata
     global expected_metadata
     with open('actual_metadata.json', 'r') as f:

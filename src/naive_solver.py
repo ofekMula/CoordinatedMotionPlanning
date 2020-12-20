@@ -40,7 +40,7 @@ def create_graph(grid, invalid_positions):
     return graph
 
 
-def calc_stuck_robot_next_step(robot,graph):
+def calc_stuck_robot_next_steps(robot, graph):
     sp = []
     if robot.current_pos not in graph or robot.target_pos not in graph:
         return []
@@ -70,15 +70,16 @@ def calc_robot_next_step(robot, invalid_positions, stuck, grid):
     try_left = stuck and go_up
     try_down = stuck and go_left
     try_right = stuck and go_down
+    upright_directions=[]
     stay = False
-    if len(robot.path)>0: #using the shortest path we calculated before for this robot
-        if valid_path(robot,invalid_positions):
-            next_pos = robot.path[0]
-            go_direction=utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
-            robot.path = robot.path[1:]
-            return next_pos, go_direction
-        else:
-            robot.path=[]
+    # if len(robot.path)>0: #using the shortest path we calculated before for this robot
+    #     if valid_path(robot,invalid_positions):
+    #         next_pos = robot.path[0]
+    #         go_direction=utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
+    #         robot.path = robot.path[1:]
+    #         return next_pos, go_direction
+    #     else:
+    #         robot.path=[]
     for go_condition, go_direction in zip([go_right, go_up, go_left, go_down], [RIGHT, UP, LEFT, DOWN]):
         if go_condition:
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
@@ -90,22 +91,29 @@ def calc_robot_next_step(robot, invalid_positions, stuck, grid):
     if not stay:
         for go_condition, go_direction in zip([try_up, try_left, try_down, try_right], [UP, LEFT, DOWN, RIGHT]):
             if go_condition:
+                upright_directions.append(utils.UPRIGHT_DIRECTION[go_direction])
                 next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
                 if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
                     if next_pos != robot.prev_pos:
                         return next_pos, go_direction
-    if stuck:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
-        if robot.current_pos != robot.target_pos:
-            g = create_graph(grid, invalid_positions) #build a new graph.
-            sp = calc_stuck_robot_next_step(robot, g) # find its shortest path
-            if len(sp)>1:
-                next_pos = sp[1]
-                go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
+        for go_direction in upright_directions:
+            next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
+            if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
                 if next_pos != robot.prev_pos:
-                    robot.path = sp[2:]# save the rest of the path in the robot for latest use
-                else:
-                    robot.path =[]
-                return next_pos, go_direction  # todo: try to implement it better : handle better previous
+                    return next_pos, go_direction
+
+    # if stuck:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
+    #     if robot.current_pos != robot.target_pos:
+    #         g = create_graph(grid, invalid_positions) #build a new graph.
+    #         sp = calc_stuck_robot_next_steps(robot, g) # find its shortest path
+    #         if len(sp)>1:
+    #             next_pos = sp[1]
+    #             go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
+    #             # if next_pos != robot.prev_pos:
+    #             robot.path = sp[2:]# save the rest of the path in the robot for latest use
+    #             # else:
+    #             #     robot.path =[]
+    #             return next_pos, go_direction  # todo: try to implement it better : handle better previous
     return robot.current_pos, None
 
 
@@ -158,7 +166,7 @@ def is_not_finished(robots):
 def is_not_stuck(steps):
     if len(steps) > 0 and len(steps[-1]) == 0:
         return False
-    if len(steps) > 200:
+    if len(steps) > 100:
         return False
     return True
 

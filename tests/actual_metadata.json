@@ -1,28 +1,28 @@
 {
     "election_109.instance.json": {
         "succeed": false,
-        "total_time": 12.683752059936523,
-        "number_of_steps": 115,
-        "number_of_moves": 2754,
-        "remained_distance": 307
+        "total_time": 0.17832159996032715,
+        "number_of_steps": 101,
+        "number_of_moves": 2933,
+        "remained_distance": 253
     },
     "scene_2.json": {
         "succeed": true,
-        "total_time": 0.01604008674621582,
+        "total_time": 0.0036551952362060547,
         "number_of_steps": 5,
         "number_of_moves": 7,
         "remained_distance": 0
     },
     "scene_5.json": {
         "succeed": true,
-        "total_time": 0.007990598678588867,
-        "number_of_steps": 9,
-        "number_of_moves": 25,
+        "total_time": 0.005720376968383789,
+        "number_of_steps": 7,
+        "number_of_moves": 21,
         "remained_distance": 0
     },
     "simple_election.json": {
         "succeed": true,
-        "total_time": 0.008177995681762695,
+        "total_time": 0.007338523864746094,
         "number_of_steps": 15,
         "number_of_moves": 36,
         "remained_distance": 0
