@@ -12,6 +12,7 @@ from utils import RIGHT, DOWN, LEFT, UP
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
 
+
 def only_one_direction_valid(robot,invalid_positions):
     counter = 0
     next_pos =None
@@ -19,7 +20,7 @@ def only_one_direction_valid(robot,invalid_positions):
         try_pos = utils.calc_next_pos(robot.current_pos, direction)
         if try_pos in invalid_positions:
             if invalid_positions[try_pos].occupied_type == PERMANENT_OCCUPIED:
-                counter+=1
+                counter += 1
             else:
                 next_pos = try_pos
         else :
@@ -27,6 +28,8 @@ def only_one_direction_valid(robot,invalid_positions):
     if counter == 3:
         return next_pos,utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
     return None
+
+
 def create_graph(grid, invalid_positions):
     min_x = min(a[0] for a in grid)
     max_x = max(a[0] for a in grid)
@@ -77,22 +80,6 @@ def valid_path(robot, invalid_positions):
     return False
 
 
-def only_prev_valid(robot,invalid_positions,prev_direction):
-    blocked_directions =[]
-    next_steps=[]
-    for direction in utils.DIRECTION_TO_VECTOR.keys():
-        if prev_direction !=prev_direction:
-            blocked_directions.append(direction)
-    for direction in blocked_directions:
-        next_steps.append(utils.calc_next_pos(robot.current_pos,direction))
-    for step in next_steps:
-        if step not in invalid_positions:
-            return False
-        if invalid_positions[step].occupied_type == TEMPORARY_OCCUPIED:
-            return False
-    return True
-
-
 def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
 
     go_right = (robot.target_pos[0] - robot.current_pos[0]) > 0
@@ -138,12 +125,11 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
                 if next_pos != robot.prev_pos:
                     return next_pos, go_direction
 
-        if only_one_direction_valid(robot,invalid_positions) !=None:
+        if only_one_direction_valid(robot,invalid_positions) is not None:
             next_pos,direction = only_one_direction_valid(robot,invalid_positions)
-            len(next_pos)
-            robot.path=list({next_pos})
-            if valid_path(robot,invalid_positions):
-                return next_pos,direction
+            robot.path = list({next_pos})
+            if valid_path(robot, invalid_positions):
+                return next_pos, direction
 
         # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
@@ -197,6 +183,7 @@ def create_grid(robots,obstacles):
     grid = [(x, y) for x in range(min_x - 1, max_x + 2) for y in range(min_y - 1, max_y + 2)]
     return grid
 
+
 def clean_invalid_position(invalid_positions):
     positions_to_clean = []
     for pos in invalid_positions:
@@ -237,7 +224,7 @@ def load_occupied_positions(robots, obstacles_pos):
     return invalid_positions
 
 
-def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, stuck,grid):
+def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, stuck):
     next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck,stuck_robots)
     if next_direction:
         move_robot(robot, next_pos, invalid_positions, next_direction)
@@ -273,21 +260,13 @@ def solve(infile: str, outfile: str):
         stuck_robots = []
         for robot in robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
-             total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,grid)
+                total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False)
         for robot in stuck_robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
-                total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,grid)
+                total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True)
         robots = [r for r in robots if r not in stuck_robots] + stuck_robots
         clean_invalid_position(invalid_positions)
         step_number += 1
-
-
-
-
-
-
-
-
 
     # after the algorithm finished, we should write the moves data structure to json file.
     utils.write_solution(steps, name, outfile)
