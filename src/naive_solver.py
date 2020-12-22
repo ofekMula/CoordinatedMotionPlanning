@@ -11,6 +11,22 @@ from utils import RIGHT, DOWN, LEFT, UP
 
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
+
+def only_one_direction_valid(robot,invalid_positions):
+    counter = 0
+    next_pos =None
+    for direction in utils.OPPOSING_DIRECTION.keys():
+        try_pos = utils.calc_next_pos(robot.current_pos, direction)
+        if try_pos in invalid_positions:
+            if invalid_positions[try_pos].occupied_type == PERMANENT_OCCUPIED:
+                counter+=1
+            else:
+                next_pos = try_pos
+        else :
+            next_pos = try_pos
+    if counter == 3:
+        return next_pos,utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
+    return None
 def create_graph(grid, invalid_positions):
     min_x = min(a[0] for a in grid)
     max_x = max(a[0] for a in grid)
@@ -45,7 +61,9 @@ def calc_stuck_robot_next_steps(robot, graph):
     if robot.current_pos not in graph or robot.target_pos not in graph:
         return []
     if nx.has_path(graph, robot.current_pos, robot.target_pos):
-        sp = nx.shortest_path(graph, robot.current_pos, robot.target_pos)
+        #nx.algorithms.shortest_paths.all_pairs_shortest_path()
+        #sp = nx.shortest_path(graph, robot.current_pos, robot.target_pos)
+        sp = nx.astar_path(graph,robot.current_pos,robot.target_pos)
     return sp
 
 
@@ -120,35 +138,54 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
                 if next_pos != robot.prev_pos:
                     return next_pos, go_direction
 
+        if only_one_direction_valid(robot,invalid_positions) !=None:
+            next_pos,direction = only_one_direction_valid(robot,invalid_positions)
+            len(next_pos)
+            robot.path=list({next_pos})
+            if valid_path(robot,invalid_positions):
+                return next_pos,direction
 
-        # if stuck:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
+        # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
-        #         grid = create_grid(stuck_robots,invalid_positions)
+        #         grid = create_grid({robot},invalid_positions)
         #         g = create_graph(grid, invalid_positions) #build a new graph.
         #         sp = calc_stuck_robot_next_steps(robot, g) # find its shortest path
+        #         prev_pos = next_pos
         #         if len(sp)>1:
         #             next_pos = sp[1]
         #             go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
-        #             # if next_pos != robot.prev_pos:
-        #             robot.path = sp[2:]# save the rest of the path in the robot for latest use
-        #             # else:
-        #             #     robot.path =[]
+        #             if next_pos != robot.prev_pos:
+        #                 robot.path = sp[2:]
+        #             else:
+        #                 if stuck:
+        #                     robot.path = sp[2:]
+        #                 else:
+        #                     if prev_pos in invalid_positions:
+        #                         if len(sp) > abs_distance(robot):
+        #                             robot.path = []
+        #                             return robot.current_pos,None
         #             return next_pos, go_direction  # todo: try to implement it better : handle better previous
+
     return robot.current_pos, None
 
 
 def sort_robots(robots):
     return sorted(robots, key=lambda robot: robot.distance)
 
+def abs_distance(robot):
+    current_pos = robot.current_pos
+    target_pos = robot.target_pos
+    return abs(target_pos[0] - current_pos[0]) + abs(target_pos[1] - current_pos[1])
 
 def update_robots_distances(robots, graph):
     for robot in robots:
         target_pos = robot.target_pos
         current_pos = robot.current_pos
         # robot.distance = abs(target_pos[0] - current_pos[0]) + abs(target_pos[1] - current_pos[1])
-        if nx.has_path(graph, current_pos, target_pos):
-            sp = nx.shortest_path(graph, current_pos, target_pos)
-            robot.distance = len(sp) - 1
+        if current_pos in graph and target_pos in graph:
+            if nx.has_path(graph, current_pos, target_pos):
+                sp = nx.shortest_path(graph, current_pos, target_pos)
+                robot.distance = len(sp) - 1
     return sum(map(lambda r: r.distance, robots))
 
 def create_grid(robots,obstacles):
@@ -235,14 +272,19 @@ def solve(infile: str, outfile: str):
         steps.append(dict())  # each step holds dictionary <robot_index,next_direction>
         stuck_robots = []
         for robot in robots:  # move each robot accordingly to its priority
-            total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,grid)
+            if robot.current_pos != robot.target_pos:
+             total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,grid)
         for robot in stuck_robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
                 total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,grid)
-
         robots = [r for r in robots if r not in stuck_robots] + stuck_robots
         clean_invalid_position(invalid_positions)
         step_number += 1
+
+
+
+
+
 
 
 
@@ -264,14 +306,14 @@ def solve(infile: str, outfile: str):
 
 def main():
     metadata = dict()
-    # for file_name in os.listdir('../tests/inputs/'):
-    #     if file_name.startswith('large'):
-    #         continue
-    #     metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    # utils.write_metadata(metadata)
-    file_name = 'election_109.instance.json'
-    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    for file_name in os.listdir('../tests/inputs/'):
+        if file_name.startswith('large'):
+            continue
+        metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
+    # file_name = 'scene_5.json'
+    # metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    # utils.write_metadata(metadata)
 
 if __name__ == "__main__":
     main()
