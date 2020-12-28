@@ -80,7 +80,33 @@ def valid_path(robot, invalid_positions):
     return False
 
 
-def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
+def is_step_valid(current_pos, go_direction, invalid_positions):
+    next_pos = utils.calc_next_pos(current_pos, go_direction)
+    return next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction
+
+
+def is_blocked_permanent(current_pos, go_direction, invalid_positions):
+    next_pos = utils.calc_next_pos(current_pos, go_direction)
+    if is_step_valid(current_pos, go_direction, invalid_positions):
+        return False
+    if next_pos in invalid_positions and invalid_positions[next_pos].occupied_type == PERMANENT_OCCUPIED:
+        return True
+    return is_blocked_permanent(next_pos, go_direction, invalid_positions)
+
+
+def is_only_one_direction_valid(robot, invalid_positions):
+    blocked_directions = list(filter(lambda direction:
+                                     not is_step_valid(robot.current_pos, direction, invalid_positions),
+                                     utils.OPPOSING_DIRECTION.keys()))
+    blocked_permanent = list(filter(lambda direction:
+                                    is_blocked_permanent(robot.current_pos, direction, invalid_positions),
+                                    blocked_directions))
+    if len(blocked_permanent) >= 2 and len(blocked_directions) >= 3:
+        return True
+    return False
+
+
+def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number):
     go_right = (robot.target_pos[0] - robot.current_pos[0]) > 0
     go_up = (robot.target_pos[1] - robot.current_pos[1]) > 0
     go_left = (robot.target_pos[0] - robot.current_pos[0]) < 0
@@ -99,6 +125,11 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
     #         return next_pos, go_direction
     #     else:
     #         robot.path=[]
+    if is_only_one_direction_valid(robot, invalid_positions):
+        pass
+        # log.warn('Clean')
+        # robot.prev_pos = None
+
     for go_condition, go_direction in zip([go_right, go_up, go_left, go_down], [RIGHT, UP, LEFT, DOWN]):
         if go_condition:
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
@@ -124,12 +155,18 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
                 if next_pos != robot.prev_pos:
                     return next_pos, go_direction
 
-        if only_one_direction_valid(robot, invalid_positions) is not None:
-            next_pos, direction = only_one_direction_valid(robot, invalid_positions)
-            robot.path = list({next_pos})
-            if valid_path(robot, invalid_positions):
-                return next_pos, direction
-
+        valid_directions = list(filter(lambda direction: is_step_valid(robot.current_pos, direction, invalid_positions),
+                                       utils.OPPOSING_DIRECTION.keys()))
+        blocked_directions = filter(lambda direction: direction not in valid_directions,
+                                    utils.OPPOSING_DIRECTION.keys())
+        blocked_permanent = list(filter(lambda direction:
+                                        is_blocked_permanent(robot.current_pos, direction, invalid_positions),
+                                        blocked_directions))
+        if len(valid_directions) == 1:
+            pass
+            # log.warn(
+            #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
+            return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
         # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
         #         grid = create_grid({robot},invalid_positions)
@@ -150,7 +187,6 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots):
         #                             robot.path = []
         #                             return robot.current_pos,None
         #             return next_pos, go_direction  # todo: try to implement it better : handle better previous
-
     return robot.current_pos, None
 
 
@@ -227,7 +263,7 @@ def load_occupied_positions(robots, obstacles_pos):
 
 
 def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, stuck):
-    next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots)
+    next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number)
     if next_direction:
         move_robot(robot, next_pos, invalid_positions, next_direction)
         steps[step_number][str(robot.index)] = next_direction
@@ -287,14 +323,14 @@ def solve(infile: str, outfile: str):
 
 def main():
     metadata = dict()
-    for file_name in os.listdir('../tests/inputs/'):
-        if file_name.startswith('large'):
-            continue
-        metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    utils.write_metadata(metadata)
-    # file_name = 'scene_5.json'
-    # metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    # for file_name in os.listdir('../tests/inputs/'):
+    #     if file_name.startswith('large'):
+    #         continue
+    #     metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     # utils.write_metadata(metadata)
+    file_name = 'election_109.instance.json'
+    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    utils.write_metadata(metadata)
 
 
 if __name__ == "__main__":
