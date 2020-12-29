@@ -286,9 +286,9 @@ def clean_invalid_position(invalid_positions):
 
 def move_robot(robot, robot_next_pos, invalid_positions, direction):
     # The order of these lines are important
-    # if invalid_positions[robot.current_pos].occupied_type != PERMANENT_OCCUPIED:
-    #     # If the cell was not blocked
-    invalid_positions[robot.current_pos].direction = direction
+    if invalid_positions[robot.current_pos].occupied_type != PERMANENT_OCCUPIED:
+        # If the cell was not blocked
+        invalid_positions[robot.current_pos].direction = direction
     robot.prev_pos = robot.current_pos
     robot.current_pos = robot_next_pos
     occupied_type = PERMANENT_OCCUPIED if robot.current_pos == robot.target_pos else TEMPORARY_OCCUPIED
