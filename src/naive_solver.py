@@ -147,7 +147,18 @@ def is_way_not_blocked(robot, next_pos, go_direction, way_blocked):
 
 
 def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number, way_blocked):
-    valid_directions = []
+    valid_directions = list(filter(lambda direction: is_step_valid(robot.current_pos, direction, invalid_positions),
+                                   utils.OPPOSING_DIRECTION.keys()))
+    blocked_directions = filter(lambda direction: direction not in valid_directions,
+                                utils.OPPOSING_DIRECTION.keys())
+    blocked_permanent = list(filter(lambda direction:
+                                    is_blocked_permanent(robot.current_pos, direction, invalid_positions),
+                                    blocked_directions))
+    if len(blocked_permanent) == 3:
+        invalid_positions[robot.current_pos] = Occupied(PERMANENT_OCCUPIED, None)
+        log.critical(
+            f'step {step_number} robot {robot.index} pos {robot.current_pos} is blocked because {blocked_permanent}')
+
     go_right = (robot.target_pos[0] - robot.current_pos[0]) > 0
     go_up = (robot.target_pos[1] - robot.current_pos[1]) > 0
     go_left = (robot.target_pos[0] - robot.current_pos[0]) < 0
@@ -168,9 +179,9 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     #         robot.path=[]
 
     # if is_only_one_direction_valid(robot, invalid_positions):
-        # pass
-        # log.warn('Clean')
-        # robot.prev_pos = None
+    # pass
+    # log.warn('Clean')
+    # robot.prev_pos = None
 
     for go_condition, go_direction in zip([go_right, go_up, go_left, go_down], [RIGHT, UP, LEFT, DOWN]):
         if go_condition:
@@ -203,20 +214,10 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                         and is_way_not_blocked(robot, next_pos, go_direction, way_blocked):
                     return next_pos, go_direction
 
-        valid_directions = list(filter(lambda direction: is_step_valid(robot.current_pos, direction, invalid_positions),
-                                       utils.OPPOSING_DIRECTION.keys()))
-        blocked_directions = filter(lambda direction: direction not in valid_directions,
-                                    utils.OPPOSING_DIRECTION.keys())
-        blocked_permanent = list(filter(lambda direction:
-                                        is_blocked_permanent(robot.current_pos, direction, invalid_positions),
-                                        blocked_directions))
         if len(valid_directions) == 1:
             pass
             # log.warn(
             #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
-            if len(blocked_permanent) == 3:
-                invalid_positions[robot.current_pos] = Occupied(PERMANENT_OCCUPIED, None)
-                log.critical(f'step {step_number} pos {robot.current_pos} is blocked because {blocked_permanent}')
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
         # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
@@ -238,7 +239,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
         #                             robot.path = []
         #                             return robot.current_pos,None
         #             return next_pos, go_direction  # todo: try to implement it better : handle better previous
-    if len(valid_directions) != 0 and stuck:
+    if stuck:
         log.error(
             f'Step {step_number} robot {robot.index} stuck. current {robot.current_pos} target {robot.target_pos}. directions {valid_directions} are valid')
     return robot.current_pos, None
@@ -285,6 +286,8 @@ def clean_invalid_position(invalid_positions):
 
 def move_robot(robot, robot_next_pos, invalid_positions, direction):
     # The order of these lines are important
+    # if invalid_positions[robot.current_pos].occupied_type != PERMANENT_OCCUPIED:
+    #     # If the cell was not blocked
     invalid_positions[robot.current_pos].direction = direction
     robot.prev_pos = robot.current_pos
     robot.current_pos = robot_next_pos
