@@ -17,3 +17,4 @@ class Robot:
         self.prev_pos = None
         self.path = []
         self.way_blocked = list()
+        self.last_move_direction = 'E'

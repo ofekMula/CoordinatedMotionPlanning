@@ -169,6 +169,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     try_right = stuck and go_down
     directions_to_check = []
     stay = False
+    condition_direction_mapping = {RIGHT: go_right, UP: go_up, DOWN: go_down, LEFT: go_left}
     # if len(robot.path)>0: #using the shortest path we calculated before for this robot
     #     if valid_path(robot,invalid_positions):
     #         next_pos = robot.path[0]
@@ -183,7 +184,9 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     # log.warn('Clean')
     # robot.prev_pos = None
 
-    for go_condition, go_direction in zip([go_right, go_up, go_left, go_down], [RIGHT, UP, LEFT, DOWN]):
+    for go_condition, go_direction in zip(
+            [condition_direction_mapping[robot.last_move_direction], go_right, go_up, go_left, go_down],
+            [robot.last_move_direction, RIGHT, UP, LEFT, DOWN]):
         if go_condition:
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
             if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
@@ -293,6 +296,7 @@ def move_robot(robot, robot_next_pos, invalid_positions, direction):
     robot.current_pos = robot_next_pos
     occupied_type = PERMANENT_OCCUPIED if robot.current_pos == robot.target_pos else TEMPORARY_OCCUPIED
     invalid_positions[robot.current_pos] = Occupied(occupied_type, None)
+    robot.last_move_direction = direction
 
 
 def is_not_finished(robots):
