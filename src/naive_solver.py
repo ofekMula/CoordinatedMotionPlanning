@@ -146,7 +146,7 @@ def is_way_not_blocked(robot, next_pos, go_direction, way_blocked):
     return True
 
 
-def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number, way_blocked):
+def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number, way_blocked, robots_dsts):
     valid_directions = list(filter(lambda direction: is_step_valid(robot.current_pos, direction, invalid_positions),
                                    utils.OPPOSING_DIRECTION.keys()))
     blocked_directions = filter(lambda direction: direction not in valid_directions,
@@ -154,7 +154,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     blocked_permanent = list(filter(lambda direction:
                                     is_blocked_permanent(robot.current_pos, direction, invalid_positions),
                                     blocked_directions))
-    if len(blocked_permanent) == 3:
+    if len(blocked_permanent) == 3 and robot.current_pos not in robots_dsts:
         invalid_positions[robot.current_pos] = Occupied(PERMANENT_OCCUPIED, None)
         log.critical(
             f'step {step_number} robot {robot.index} pos {robot.current_pos} is blocked because {blocked_permanent}')
@@ -300,14 +300,14 @@ def move_robot(robot, robot_next_pos, invalid_positions, direction):
 
 
 def is_not_finished(robots):
-    log.debug(f'Finished robots: {sum(robot.current_pos == robot.target_pos for robot in robots)}/{len(robots)}')
+    # log.debug(f'Finished robots: {sum(robot.current_pos == robot.target_pos for robot in robots)}/{len(robots)}')
     return not all(robot.current_pos == robot.target_pos for robot in robots)
 
 
 def is_not_stuck(steps):
     if len(steps) > 0 and len(steps[-1]) == 0:
         return False
-    if len(steps) > 250:
+    if len(steps) > 150:
         return False
     return True
 
@@ -321,13 +321,15 @@ def load_occupied_positions(robots, obstacles_pos):
     return invalid_positions
 
 
-def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, stuck, way_blocked):
+def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, stuck, way_blocked, robots_dsts):
     next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number,
-                                                    way_blocked)
+                                                    way_blocked, robots_dsts)
     if next_direction:
+        if step_number > 230:
+            log.debug(
+                f'step_number={step_number}, robot={robot.index}, move={next_direction} from {robot.current_pos} to {next_pos} dest {robot.target_pos}')
         move_robot(robot, next_pos, invalid_positions, next_direction)
         steps[step_number][str(robot.index)] = next_direction
-        log.debug(f'step_number={step_number}, robot={robot.index}, move={next_direction}')
         total_moves += 1
     elif not stuck:
         stuck_robots.append(robot)
@@ -340,7 +342,7 @@ def subtract_pos(current_pos, next_pos):
 
 def solve(infile: str, outfile: str):
     global log
-    log = Logger(os.path.split(infile)[1], level=INFO)
+    log = Logger(os.path.split(infile)[1])
     start_time = time.time()
 
     robots, obstacles, name = utils.read_scene(infile)
@@ -350,6 +352,7 @@ def solve(infile: str, outfile: str):
     remained_distance = update_robots_distances(robots, graph)
     log.info(f'Started! {remained_distance} distance')
     robots = sort_robots(robots)
+    robots_dsts = list(map(lambda robot: robot.target_pos, robots))
     steps = []  # a data structure to hold all the moves for each robot
     step_number = 0
     total_moves = 0
@@ -360,11 +363,11 @@ def solve(infile: str, outfile: str):
         for robot in robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
                 total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,
-                                   way_blocked)
+                                   way_blocked, robots_dsts)
         for robot in stuck_robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
                 total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,
-                                   way_blocked)
+                                   way_blocked, robots_dsts)
         robots = [r for r in robots if r not in stuck_robots] + stuck_robots
         clean_invalid_position(invalid_positions)
         step_number += 1

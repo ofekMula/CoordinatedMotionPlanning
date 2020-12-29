@@ -1,9 +1,9 @@
 {
     "election_109.instance.json": {
         "succeed": false,
-        "total_time": 1.6343393325805664,
-        "number_of_steps": 251,
-        "number_of_moves": 5550,
-        "remained_distance": 210
+        "total_time": 1.0926742553710938,
+        "number_of_steps": 151,
+        "number_of_moves": 4469,
+        "remained_distance": 205
     }
 }
