@@ -110,9 +110,9 @@ def update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions
         next_pos_direction2 = utils.calc_next_pos(cur_pos_direction2, direction2)
 
     if cur_pos_direction1 != cur_pos_direction2:
-        if (cur_pos_direction1[0] == cur_pos_direction2[0] and abs(cur_pos_direction1[1] - cur_pos_direction2[1]) > 3) \
+        if (cur_pos_direction1[0] == cur_pos_direction2[0] and abs(cur_pos_direction1[1] - cur_pos_direction2[1]) > 0) \
                 or (cur_pos_direction1[1] == cur_pos_direction2[1] and
-                    abs(cur_pos_direction1[0] - cur_pos_direction2[0]) > 3):
+                    abs(cur_pos_direction1[0] - cur_pos_direction2[0]) > 0):
             if [go_direction, (cur_pos_direction1, cur_pos_direction2)] not in robot.way_blocked:
                 log.info(
                     f'step {step_number} robot {robot.index} {[go_direction, (cur_pos_direction1, cur_pos_direction2)]}')
@@ -325,7 +325,7 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
     next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number,
                                                     way_blocked, robots_dsts)
     if next_direction:
-        if step_number > 230:
+        if step_number > 140:
             log.debug(
                 f'step_number={step_number}, robot={robot.index}, move={next_direction} from {robot.current_pos} to {next_pos} dest {robot.target_pos}')
         move_robot(robot, next_pos, invalid_positions, next_direction)
