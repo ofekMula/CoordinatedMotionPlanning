@@ -215,7 +215,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                     return next_pos, go_direction
 
         if len(valid_directions) == 1:
-            pass
+            # pass
             # log.warn(
             #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
