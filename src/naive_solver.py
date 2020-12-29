@@ -110,9 +110,7 @@ def update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions
         next_pos_direction2 = utils.calc_next_pos(cur_pos_direction2, direction2)
 
     if cur_pos_direction1 != cur_pos_direction2:
-        if (cur_pos_direction1[0] == cur_pos_direction2[0] and abs(cur_pos_direction1[1] - cur_pos_direction2[1]) > 0) \
-                or (cur_pos_direction1[1] == cur_pos_direction2[1] and
-                    abs(cur_pos_direction1[0] - cur_pos_direction2[0]) > 0):
+        if cur_pos_direction1[0] == cur_pos_direction2[0] or cur_pos_direction1[1] == cur_pos_direction2[1]:
             if [go_direction, (cur_pos_direction1, cur_pos_direction2)] not in robot.way_blocked:
                 log.info(
                     f'step {step_number} robot {robot.index} {[go_direction, (cur_pos_direction1, cur_pos_direction2)]}')
@@ -222,6 +220,11 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             # log.warn(
             #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
+        if len(valid_directions) == 2:
+            for go_direction in valid_directions:
+                next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
+                if is_way_not_blocked(robot, next_pos, go_direction, way_blocked):
+                    return next_pos, go_direction
         # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     if robot.current_pos != robot.target_pos:
         #         grid = create_grid({robot},invalid_positions)
@@ -325,7 +328,7 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
     next_pos, next_direction = calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_number,
                                                     way_blocked, robots_dsts)
     if next_direction:
-        if step_number > 140:
+        if step_number > 90:
             log.debug(
                 f'step_number={step_number}, robot={robot.index}, move={next_direction} from {robot.current_pos} to {next_pos} dest {robot.target_pos}')
         move_robot(robot, next_pos, invalid_positions, next_direction)
