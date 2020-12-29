@@ -110,12 +110,11 @@ def update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions
         next_pos_direction2 = utils.calc_next_pos(cur_pos_direction2, direction2)
 
     if cur_pos_direction1 != cur_pos_direction2:
-        if cur_pos_direction1[0] == cur_pos_direction2[0] or cur_pos_direction1[1] == cur_pos_direction2[1]:
-            if [go_direction, (cur_pos_direction1, cur_pos_direction2)] not in robot.way_blocked:
-                log.info(
-                    f'step {step_number} robot {robot.index} {[go_direction, (cur_pos_direction1, cur_pos_direction2)]}')
-                robot.way_blocked.append([go_direction, (cur_pos_direction1, cur_pos_direction2)])
-                robot.prev_pos = None
+        if [go_direction, (cur_pos_direction1, cur_pos_direction2)] not in robot.way_blocked:
+            log.info(
+                f'step {step_number} robot {robot.index} {[go_direction, (cur_pos_direction1, cur_pos_direction2)]}')
+            robot.way_blocked.append([go_direction, (cur_pos_direction1, cur_pos_direction2)])
+            robot.prev_pos = None
 
 
 def is_way_not_blocked(robot, next_pos, go_direction):
