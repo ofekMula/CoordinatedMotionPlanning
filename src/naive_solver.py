@@ -195,6 +195,11 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     stay = False
     condition_direction_mapping = {RIGHT: go_right, UP: go_up, DOWN: go_down, LEFT: go_left}
 
+    if robot.last_move_direction in blocked_permanent\
+            and ((abs(robot.current_pos[0] - robot.target_pos[0])==1
+                 and abs(robot.current_pos[1] - robot.target_pos[1]) >1)
+                 or (abs(robot.current_pos[1] -robot.target_pos[1])==1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
+        update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction,invalid_positions,step_number)
     if len(robot.path)>0: #using the shortest path we calculated before for this robot
         if valid_path(robot,invalid_positions) :
             next_pos = robot.path[0]
@@ -217,9 +222,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             if next_pos in invalid_positions and invalid_positions[next_pos].occupied_type == PERMANENT_OCCUPIED:
                 update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions, step_number)
 
-
     if not stay:
-
         for go_condition, go_direction in zip([try_up, try_left, try_down, try_right], [UP, LEFT, DOWN, RIGHT]):
             if go_condition:
                 directions_to_check.append(go_direction)
