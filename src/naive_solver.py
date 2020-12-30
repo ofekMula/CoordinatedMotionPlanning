@@ -200,6 +200,8 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                  and abs(robot.current_pos[1] - robot.target_pos[1]) >1)
                  or (abs(robot.current_pos[1] -robot.target_pos[1])==1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
         update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction,invalid_positions,step_number)
+
+
     if len(robot.path)>0: #using the shortest path we calculated before for this robot
         if valid_path(robot,invalid_positions) :
             next_pos = robot.path[0]
@@ -300,10 +302,10 @@ def update_robots_distances(robots, graph):
 
 def create_grid(robots, obstacles):
     all_points = [robot.current_pos for robot in robots] + [robot.target_pos for robot in robots] + list(obstacles)
-    min_x = min(a[0] for a in all_points)
-    max_x = max(a[0] for a in all_points)
-    min_y = min(a[1] for a in all_points)
-    max_y = max(a[1] for a in all_points)
+    min_x = min(a[0] for a in all_points) - 1
+    max_x = max(a[0] for a in all_points) + 1
+    min_y = min(a[1] for a in all_points) - 1
+    max_y = max(a[1] for a in all_points) + 1
     grid = [(x, y) for x in range(min_x - 1, max_x + 2) for y in range(min_y - 1, max_y + 2)]
     return grid
 
@@ -427,8 +429,9 @@ def main():
         metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
     file_name = 'election_109.instance.json'
-    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    utils.write_metadata(metadata)
+    # file_name = 'socg2021_108.instance.json'
+    # metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    # utils.write_metadata(metadata)
 
 
 if __name__ == "__main__":
