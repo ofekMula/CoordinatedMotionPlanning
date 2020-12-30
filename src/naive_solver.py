@@ -11,7 +11,13 @@ import queue
 
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
-
+def get_all_blocked_directions(robot,blocked_permanent):
+    blocked_directions = set()
+    for way in robot.way_blocked:
+        blocked_directions.add(way[0])
+    for direction in blocked_permanent:
+        blocked_directions.add(direction)
+    return blocked_directions
 def is_next_pos_in_last_moves(robot,next_pos):
     for pos in robot.last_moves:
         if next_pos == pos[0]:
@@ -188,14 +194,15 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     directions_to_check = []
     stay = False
     condition_direction_mapping = {RIGHT: go_right, UP: go_up, DOWN: go_down, LEFT: go_left}
-    # if len(robot.path)>0: #using the shortest path we calculated before for this robot
-    #     if valid_path(robot,invalid_positions) :
-    #         next_pos = robot.path[0]
-    #         go_direction=utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
-    #         robot.path = robot.path[1:]
-    #         return next_pos, go_direction
-    #     else:
-    #         robot.path=[]
+
+    if len(robot.path)>0: #using the shortest path we calculated before for this robot
+        if valid_path(robot,invalid_positions) :
+            next_pos = robot.path[0]
+            go_direction=utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
+            robot.path = robot.path[1:]
+            return next_pos, go_direction
+        else:
+            robot.path=[]
 
     for go_condition, go_direction in zip(
             [condition_direction_mapping[robot.last_move_direction], go_right, go_up, go_left, go_down],
@@ -210,7 +217,9 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             if next_pos in invalid_positions and invalid_positions[next_pos].occupied_type == PERMANENT_OCCUPIED:
                 update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions, step_number)
 
+
     if not stay:
+
         for go_condition, go_direction in zip([try_up, try_left, try_down, try_right], [UP, LEFT, DOWN, RIGHT]):
             if go_condition:
                 directions_to_check.append(go_direction)
@@ -232,9 +241,6 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                     return next_pos, go_direction
 
             if len(valid_directions) == 1:
-                # pass
-                # log.warn(
-                #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
                 return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
 
             if len(valid_directions) == 2:
@@ -249,10 +255,20 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
         #
         #
-        # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
+        # if len(valid_directions) == 0 and stuck :# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     next_pos, go_direction = calc_sp(robot,invalid_positions)
         #     return next_pos, go_direction
+        a = get_all_blocked_directions(robot,blocked_permanent)
+        if len(a) >=3:
+            next_pos, go_direction = calc_sp(robot, invalid_positions)
+            return next_pos, go_direction
 
+        # if (robot.current_pos[0] == robot.target_pos[0] or robot.current_pos[1] == robot.target_pos[1]):
+        # if robot.last_move_direction in blocked_permanent\
+        #         and ((abs(robot.current_pos[0] - robot.target_pos[0])==1
+        #              and abs(robot.current_pos[1] - robot.target_pos[1]) >1)
+        #              or (abs(robot.current_pos[1] -robot.target_pos[1])==1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
+        #     update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction, invalid_positions, step_number)
     if stuck:
         log.error(
             f'Step {step_number} robot {robot.index} stuck. current {robot.current_pos} target {robot.target_pos}. directions {valid_directions} are valid')
@@ -343,7 +359,7 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
         steps[step_number][str(robot.index)] = next_direction
         total_moves += 1
         robot.last_moves.append((next_pos,next_direction))
-        if len(robot.last_moves)>=10:
+        if len(robot.last_moves)>=4:
             robot.last_moves =robot.last_moves[1:]
     elif not stuck:
         stuck_robots.append(robot)
@@ -407,9 +423,9 @@ def main():
             continue
         metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
-    # file_name = 'election_109.instance.json'
-    # metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    # utils.write_metadata(metadata)
+    file_name = 'election_109.instance.json'
+    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    utils.write_metadata(metadata)
 
 
 if __name__ == "__main__":
