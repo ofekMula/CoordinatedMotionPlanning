@@ -196,9 +196,9 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     condition_direction_mapping = {RIGHT: go_right, UP: go_up, DOWN: go_down, LEFT: go_left}
 
     if robot.last_move_direction in blocked_permanent\
-            and ((abs(robot.current_pos[0] - robot.target_pos[0])==1
+            and ((abs(robot.current_pos[0] - robot.target_pos[0]) <=1
                  and abs(robot.current_pos[1] - robot.target_pos[1]) >1)
-                 or (abs(robot.current_pos[1] -robot.target_pos[1])==1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
+                 or (abs(robot.current_pos[1] -robot.target_pos[1])<=1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
         update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction,invalid_positions,step_number)
 
 
@@ -253,27 +253,14 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                     next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
                     if is_way_not_blocked(robot, next_pos, go_direction):
                         return next_pos, go_direction
+
         if len(valid_directions) == 1:
-            # pass
-            # log.warn(
-            #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
-        #
-        #
-        # if len(valid_directions) == 0 and stuck :# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
-        #     next_pos, go_direction = calc_sp(robot,invalid_positions)
-        #     return next_pos, go_direction
+
         a = get_all_blocked_directions(robot,blocked_permanent)
         if len(a) >=3:
             next_pos, go_direction = calc_sp(robot, invalid_positions)
             return next_pos, go_direction
-
-        # if (robot.current_pos[0] == robot.target_pos[0] or robot.current_pos[1] == robot.target_pos[1]):
-        # if robot.last_move_direction in blocked_permanent\
-        #         and ((abs(robot.current_pos[0] - robot.target_pos[0])==1
-        #              and abs(robot.current_pos[1] - robot.target_pos[1]) >1)
-        #              or (abs(robot.current_pos[1] -robot.target_pos[1])==1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
-        #     update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction, invalid_positions, step_number)
     if stuck:
         log.error(
             f'Step {step_number} robot {robot.index} stuck. current {robot.current_pos} target {robot.target_pos}. directions {valid_directions} are valid')
@@ -339,7 +326,7 @@ def is_not_finished(robots):
 def is_not_stuck(steps):
     if len(steps) > 0 and len(steps[-1]) == 0:
         return False
-    if len(steps) > 150:
+    if len(steps) > 400:
         return False
     return True
 
@@ -428,10 +415,9 @@ def main():
             continue
         metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
-    file_name = 'election_109.instance.json'
-    # file_name = 'socg2021_108.instance.json'
-    # metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    # utils.write_metadata(metadata)
+    #file_name = 'large_006_75x75_90_4599.instance.json'
+    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    utils.write_metadata(metadata)
 
 
 if __name__ == "__main__":
