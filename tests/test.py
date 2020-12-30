@@ -1,6 +1,6 @@
 import pytest
 import json
-import naive_solver
+from src import naive_solver
 
 actual_metadata: dict
 expected_metadata: dict

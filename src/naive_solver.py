@@ -7,11 +7,26 @@ import sys
 from logbook_utils import ColoredStreamHandler
 from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED, BLOCKED_OCCUPIED
 from utils import RIGHT, DOWN, LEFT, UP
+import queue
 
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
 
-
+def is_next_pos_in_last_moves(robot,next_pos):
+    for pos in robot.last_moves:
+        if next_pos == pos[0]:
+            return True
+    return False
+def calc_sp(robot,invalid_positions):
+    grid = create_grid({robot}, invalid_positions)
+    g = create_graph(grid, invalid_positions)  # build a new graph.
+    sp = calc_stuck_robot_next_steps(robot, g)  # find its shortest path
+    if len(sp) > 1:
+        next_pos = sp[1]
+        go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
+        robot.path = sp[2:]
+        return next_pos, go_direction
+    return robot.current_pos,None
 def create_graph(grid, invalid_positions):
     min_x = min(a[0] for a in grid)
     max_x = max(a[0] for a in grid)
@@ -65,7 +80,13 @@ def valid_path(robot, invalid_positions):
 
 def is_step_valid(current_pos, go_direction, invalid_positions):
     next_pos = utils.calc_next_pos(current_pos, go_direction)
-    return next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction
+    if next_pos not in invalid_positions:
+        return True
+    elif invalid_positions[next_pos].direction == go_direction:
+          return True
+    else:
+        a = invalid_positions[next_pos]
+    return False
 
 
 def is_blocked_permanent(current_pos, go_direction, invalid_positions):
@@ -168,18 +189,13 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     stay = False
     condition_direction_mapping = {RIGHT: go_right, UP: go_up, DOWN: go_down, LEFT: go_left}
     # if len(robot.path)>0: #using the shortest path we calculated before for this robot
-    #     if valid_path(robot,invalid_positions):
+    #     if valid_path(robot,invalid_positions) :
     #         next_pos = robot.path[0]
     #         go_direction=utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
     #         robot.path = robot.path[1:]
     #         return next_pos, go_direction
     #     else:
     #         robot.path=[]
-
-    # if is_only_one_direction_valid(robot, invalid_positions):
-    # pass
-    # log.warn('Clean')
-    # robot.prev_pos = None
 
     for go_condition, go_direction in zip(
             [condition_direction_mapping[robot.last_move_direction], go_right, go_up, go_left, go_down],
@@ -194,7 +210,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             if next_pos in invalid_positions and invalid_positions[next_pos].occupied_type == PERMANENT_OCCUPIED:
                 update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions, step_number)
 
-    if not stay:
+    if not stay and stuck:
         for go_condition, go_direction in zip([try_up, try_left, try_down, try_right], [UP, LEFT, DOWN, RIGHT]):
             if go_condition:
                 directions_to_check.append(go_direction)
@@ -219,31 +235,18 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             # log.warn(
             #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
+
         if len(valid_directions) == 2:
             for go_direction in valid_directions:
                 next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
                 if is_way_not_blocked(robot, next_pos, go_direction):
                     return next_pos, go_direction
+
+
         # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
-        #     if robot.current_pos != robot.target_pos:
-        #         grid = create_grid({robot},invalid_positions)
-        #         g = create_graph(grid, invalid_positions) #build a new graph.
-        #         sp = calc_stuck_robot_next_steps(robot, g) # find its shortest path
-        #         prev_pos = next_pos
-        #         if len(sp)>1:
-        #             next_pos = sp[1]
-        #             go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
-        #             if next_pos != robot.prev_pos:
-        #                 robot.path = sp[2:]
-        #             else:
-        #                 if stuck:
-        #                     robot.path = sp[2:]
-        #                 else:
-        #                     if prev_pos in invalid_positions:
-        #                         if len(sp) > abs_distance(robot):
-        #                             robot.path = []
-        #                             return robot.current_pos,None
-        #             return next_pos, go_direction  # todo: try to implement it better : handle better previous
+        #     next_pos, go_direction = calc_sp(robot,invalid_positions)
+        #     return next_pos, go_direction
+
     if stuck:
         log.error(
             f'Step {step_number} robot {robot.index} stuck. current {robot.current_pos} target {robot.target_pos}. directions {valid_directions} are valid')
@@ -333,6 +336,9 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
         move_robot(robot, next_pos, invalid_positions, next_direction)
         steps[step_number][str(robot.index)] = next_direction
         total_moves += 1
+        robot.last_moves.append((next_pos,next_direction))
+        if len(robot.last_moves)>=10:
+            robot.last_moves =robot.last_moves[1:]
     elif not stuck:
         stuck_robots.append(robot)
     return total_moves

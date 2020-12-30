@@ -1,3 +1,4 @@
+import queue
 class Robot:
     """
     A class for robot object
@@ -18,3 +19,4 @@ class Robot:
         self.path = []
         self.way_blocked = list()
         self.last_move_direction = 'E'
+        self.last_moves = list()
