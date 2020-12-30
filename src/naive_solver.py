@@ -210,7 +210,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             if next_pos in invalid_positions and invalid_positions[next_pos].occupied_type == PERMANENT_OCCUPIED:
                 update_robot_if_way_blocked(robot, next_pos, go_direction, invalid_positions, step_number)
 
-    if not stay and stuck:
+    if not stay:
         for go_condition, go_direction in zip([try_up, try_left, try_down, try_right], [UP, LEFT, DOWN, RIGHT]):
             if go_condition:
                 directions_to_check.append(go_direction)
@@ -221,6 +221,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                             and is_way_not_blocked(robot, next_pos, go_direction):
                         return next_pos, go_direction
 
+
         for direction in directions_to_check:
             go_direction = utils.OPPOSING_DIRECTION[direction]
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
@@ -230,19 +231,24 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                         and is_way_not_blocked(robot, next_pos, go_direction):
                     return next_pos, go_direction
 
+            if len(valid_directions) == 1:
+                # pass
+                # log.warn(
+                #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
+                return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
+
+            if len(valid_directions) == 2:
+                for go_direction in valid_directions:
+                    next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
+                    if is_way_not_blocked(robot, next_pos, go_direction):
+                        return next_pos, go_direction
         if len(valid_directions) == 1:
             # pass
             # log.warn(
             #     f'{step_number} Last direction {robot.current_pos}->{utils.calc_next_pos(robot.current_pos, valid_directions[0])}')
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
-
-        if len(valid_directions) == 2:
-            for go_direction in valid_directions:
-                next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
-                if is_way_not_blocked(robot, next_pos, go_direction):
-                    return next_pos, go_direction
-
-
+        #
+        #
         # if True:# if this robot is still stuck - we  might use an "expensive" calculation in order to make it move.
         #     next_pos, go_direction = calc_sp(robot,invalid_positions)
         #     return next_pos, go_direction
@@ -396,14 +402,14 @@ def solve(infile: str, outfile: str):
 
 def main():
     metadata = dict()
-    # for file_name in os.listdir('../tests/inputs/'):
-    #     if file_name.startswith('large'):
-    #         continue
-    #     metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    # utils.write_metadata(metadata)
-    file_name = 'election_109.instance.json'
-    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    for file_name in os.listdir('../tests/inputs/'):
+        if file_name.startswith('large'):
+            continue
+        metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
+    # file_name = 'election_109.instance.json'
+    # metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
+    # utils.write_metadata(metadata)
 
 
 if __name__ == "__main__":
