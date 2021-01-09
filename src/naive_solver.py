@@ -326,7 +326,7 @@ def is_not_finished(robots):
 def is_not_stuck(steps):
     if len(steps) > 0 and len(steps[-1]) == 0:
         return False
-    if len(steps) > 400:
+    if len(steps) > 200:
         return False
     return True
 
@@ -415,7 +415,7 @@ def main():
             continue
         metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
-    #file_name = 'large_006_75x75_90_4599.instance.json'
+    # file_name = 'large_free_000_75x75_30_1688.instance.json'
     metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
 
