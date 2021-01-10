@@ -209,6 +209,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             robot.path = robot.path[1:]
             return next_pos, go_direction
         else:
+
             robot.path=[]
 
     for go_condition, go_direction in zip(
@@ -257,13 +258,14 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
         if len(valid_directions) == 1:
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
 
-        a = get_all_blocked_directions(robot,blocked_permanent)
-        if len(a) >=3:
+        cur_blocked_directions = get_all_blocked_directions(robot,blocked_permanent)
+        if len(cur_blocked_directions) >=3:
             next_pos, go_direction = calc_sp(robot, invalid_positions)
             return next_pos, go_direction
     if stuck:
         log.error(
             f'Step {step_number} robot {robot.index} stuck. current {robot.current_pos} target {robot.target_pos}. directions {valid_directions} are valid')
+
     return robot.current_pos, None
 
 
