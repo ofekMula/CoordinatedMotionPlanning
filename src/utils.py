@@ -20,7 +20,6 @@ def read_scene(scene_path: str):
 DIRECTION_TO_VECTOR = {UP: (0, 1), RIGHT: (1, 0), DOWN: (0, -1), LEFT: (-1, 0), HALT: (0, 0)}
 VECTOR_TO_DIRECTION = {(0, 1): UP, (1, 0): RIGHT, (0, -1): DOWN, (-1, 0): LEFT, (0, 0): HALT}
 OPPOSING_DIRECTION = {UP: DOWN, RIGHT: LEFT, DOWN: UP, LEFT: RIGHT}
-OPPOSING_DIRECTION = {UP: DOWN, RIGHT: LEFT, DOWN: UP, LEFT: RIGHT}
 
 
 def calc_next_pos(location, direction):

@@ -1,4 +1,3 @@
-import queue
 class Robot:
     """
     A class for robot object

@@ -5,25 +5,30 @@ import time
 from logbook import Logger, INFO
 import sys
 from logbook_utils import ColoredStreamHandler
-from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED, BLOCKED_OCCUPIED
+from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED
 from utils import RIGHT, DOWN, LEFT, UP
-import queue
 
 ColoredStreamHandler(sys.stdout).push_application()
 log: Logger
-def get_all_blocked_directions(robot,blocked_permanent):
+
+
+def get_all_blocked_directions(robot, blocked_permanent):
     blocked_directions = set()
     for way in robot.way_blocked:
         blocked_directions.add(way[0])
     for direction in blocked_permanent:
         blocked_directions.add(direction)
     return blocked_directions
-def is_next_pos_in_last_moves(robot,next_pos):
+
+
+def is_next_pos_in_last_moves(robot, next_pos):
     for pos in robot.last_moves:
         if next_pos == pos[0]:
             return True
     return False
-def calc_sp(robot,invalid_positions):
+
+
+def calc_sp(robot, invalid_positions):
     grid = create_grid({robot}, invalid_positions)
     g = create_graph(grid, invalid_positions)  # build a new graph.
     sp = calc_stuck_robot_next_steps(robot, g)  # find its shortest path
@@ -32,7 +37,9 @@ def calc_sp(robot,invalid_positions):
         go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
         robot.path = sp[2:]
         return next_pos, go_direction
-    return robot.current_pos,None
+    return robot.current_pos, None
+
+
 def create_graph(grid, invalid_positions):
     min_x = min(a[0] for a in grid)
     max_x = max(a[0] for a in grid)
@@ -89,7 +96,7 @@ def is_step_valid(current_pos, go_direction, invalid_positions):
     if next_pos not in invalid_positions:
         return True
     elif invalid_positions[next_pos].direction == go_direction:
-          return True
+        return True
     else:
         a = invalid_positions[next_pos]
     return False
@@ -195,22 +202,22 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
     stay = False
     condition_direction_mapping = {RIGHT: go_right, UP: go_up, DOWN: go_down, LEFT: go_left}
 
-    if robot.last_move_direction in blocked_permanent\
-            and ((abs(robot.current_pos[0] - robot.target_pos[0]) <=1
-                 and abs(robot.current_pos[1] - robot.target_pos[1]) >1)
-                 or (abs(robot.current_pos[1] -robot.target_pos[1])<=1  and abs(robot.current_pos[0] - robot.target_pos[0]) >1)):
-        update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction,invalid_positions,step_number)
+    if robot.last_move_direction in blocked_permanent \
+            and ((abs(robot.current_pos[0] - robot.target_pos[0]) <= 1
+                  and abs(robot.current_pos[1] - robot.target_pos[1]) > 1)
+                 or (abs(robot.current_pos[1] - robot.target_pos[1]) <= 1 and abs(
+                robot.current_pos[0] - robot.target_pos[0]) > 1)):
+        update_robot_if_way_blocked(robot, robot.current_pos, robot.last_move_direction, invalid_positions, step_number)
 
-
-    if len(robot.path)>0: #using the shortest path we calculated before for this robot
-        if valid_path(robot,invalid_positions) :
+    if len(robot.path) > 0:  # using the shortest path we calculated before for this robot
+        if valid_path(robot, invalid_positions):
             next_pos = robot.path[0]
-            go_direction=utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos,next_pos)]
+            go_direction = utils.VECTOR_TO_DIRECTION[subtract_pos(robot.current_pos, next_pos)]
             robot.path = robot.path[1:]
             return next_pos, go_direction
         else:
 
-            robot.path=[]
+            robot.path = []
 
     for go_condition, go_direction in zip(
             [condition_direction_mapping[robot.last_move_direction], go_right, go_up, go_left, go_down],
@@ -236,7 +243,6 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                             and is_way_not_blocked(robot, next_pos, go_direction):
                         return next_pos, go_direction
 
-
         for direction in directions_to_check:
             go_direction = utils.OPPOSING_DIRECTION[direction]
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
@@ -258,8 +264,8 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
         if len(valid_directions) == 1:
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
 
-        cur_blocked_directions = get_all_blocked_directions(robot,blocked_permanent)
-        if len(cur_blocked_directions) >=3:
+        cur_blocked_directions = get_all_blocked_directions(robot, blocked_permanent)
+        if len(cur_blocked_directions) >= 3:
             next_pos, go_direction = calc_sp(robot, invalid_positions)
             return next_pos, go_direction
     if stuck:
@@ -352,9 +358,9 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
         move_robot(robot, next_pos, invalid_positions, next_direction)
         steps[step_number][str(robot.index)] = next_direction
         total_moves += 1
-        robot.last_moves.append((next_pos,next_direction))
-        if len(robot.last_moves)>=4:
-            robot.last_moves =robot.last_moves[1:]
+        robot.last_moves.append((next_pos, next_direction))
+        if len(robot.last_moves) >= 4:
+            robot.last_moves = robot.last_moves[1:]
     elif not stuck:
         stuck_robots.append(robot)
     return total_moves
@@ -413,7 +419,7 @@ def solve(infile: str, outfile: str):
 def main():
     metadata = dict()
     for file_name in os.listdir('../tests/inputs/'):
-        if file_name.startswith('large'):
+        if file_name.startswith('large') or not file_name.endswith('.json'):
             continue
         metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
