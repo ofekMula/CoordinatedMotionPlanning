@@ -2,7 +2,7 @@ import networkx as nx
 import utils
 import os
 import time
-from logbook import Logger, INFO
+from logbook import Logger, INFO, WARNING
 import sys
 from logbook_utils import ColoredStreamHandler
 from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED
@@ -162,7 +162,7 @@ def is_way_not_blocked(robot, next_pos, go_direction):
             dynamic_max = max(blocked_way_start[1], blocked_way_end[1])
             if abs(static - robot.current_pos[0]) > abs(static - next_pos[0]) and \
                     dynamic_min <= next_pos[1] <= dynamic_max:
-                log.warn(
+                log.info(
                     f'Cannot move robot {robot.index} in direction {go_direction} from {robot.current_pos} to {next_pos} because {blocked_way}')
                 return False
         else:
@@ -171,7 +171,7 @@ def is_way_not_blocked(robot, next_pos, go_direction):
             dynamic_max = max(blocked_way_start[0], blocked_way_end[0])
             if abs(static - robot.current_pos[1]) > abs(static - next_pos[1]) and \
                     dynamic_min <= next_pos[0] <= dynamic_max:
-                log.warn(
+                log.info(
                     f'Cannot move robot {robot.index} in direction {go_direction} from {robot.current_pos} to {next_pos} because {blocked_way}')
                 return False
     return True
@@ -187,7 +187,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                                     blocked_directions))
     if len(blocked_permanent) == 3 and robot.current_pos not in robots_dsts:
         invalid_positions[robot.current_pos] = Occupied(PERMANENT_OCCUPIED, None)
-        log.critical(
+        log.info(
             f'step {step_number} robot {robot.index} pos {robot.current_pos} is blocked because {blocked_permanent}')
 
     go_right = (robot.target_pos[0] - robot.current_pos[0]) > 0
@@ -265,11 +265,12 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
 
         cur_blocked_directions = get_all_blocked_directions(robot, blocked_permanent)
-        if len(cur_blocked_directions) >= 3:
+        if len(cur_blocked_directions) >= 3 and len(valid_directions) > 0:
+            log.warn(f'Calc SP for robot {robot.index}, step_number={step_number}')
             next_pos, go_direction = calc_sp(robot, invalid_positions)
             return next_pos, go_direction
     if stuck:
-        log.error(
+        log.info(
             f'Step {step_number} robot {robot.index} stuck. current {robot.current_pos} target {robot.target_pos}. directions {valid_directions} are valid')
 
     return robot.current_pos, None
@@ -372,7 +373,7 @@ def subtract_pos(current_pos, next_pos):
 
 def solve(infile: str, outfile: str):
     global log
-    log = Logger(os.path.split(infile)[1])
+    log = Logger(os.path.split(infile)[1], level=WARNING)
     start_time = time.time()
 
     robots, obstacles, name = utils.read_scene(infile)
@@ -411,12 +412,13 @@ def solve(infile: str, outfile: str):
         return {'succeed': True, 'total_time': total_time, 'number_of_steps': step_number,
                 'number_of_moves': total_moves, 'remained_distance': remained_distance}
     else:
-        log.warn(f'Stuck! {total_time}s, {step_number} steps, {total_moves} moves, {remained_distance} distance')
+        log.info(f'Stuck! {total_time}s, {step_number} steps, {total_moves} moves, {remained_distance} distance')
         return {'succeed': False, 'total_time': total_time, 'number_of_steps': step_number,
                 'number_of_moves': total_moves, 'remained_distance': remained_distance}
 
 
 def main():
+    start_time = time.time()
     metadata = dict()
     for file_name in os.listdir('../tests/inputs/'):
         if file_name.startswith('large') or not file_name.endswith('.json'):
@@ -426,6 +428,7 @@ def main():
     # file_name = 'large_free_000_75x75_30_1688.instance.json'
     metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
     utils.write_metadata(metadata)
+    log.error(f'Total time: {time.time() - start_time}s')
 
 
 if __name__ == "__main__":

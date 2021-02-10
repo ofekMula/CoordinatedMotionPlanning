@@ -1,77 +1,77 @@
 {
     "buffalo_free_000_25x25_20_125.instance.json": {
         "succeed": true,
-        "total_time": 0.3430602550506592,
+        "total_time": 0.2765328884124756,
         "number_of_steps": 95,
         "number_of_moves": 2825,
         "remained_distance": 0
     },
     "election_109.instance.json": {
         "succeed": true,
-        "total_time": 0.9226019382476807,
+        "total_time": 0.6392889022827148,
         "number_of_steps": 142,
         "number_of_moves": 4210,
         "remained_distance": 0
     },
     "medium_free_000_30x30_20_180.instance.json": {
         "succeed": true,
-        "total_time": 0.47871971130371094,
+        "total_time": 0.4567408561706543,
         "number_of_steps": 88,
         "number_of_moves": 5546,
         "remained_distance": 0
     },
     "medium_free_002_30x30_20_180.instance.json": {
         "succeed": true,
-        "total_time": 2.728745222091675,
+        "total_time": 2.2140774726867676,
         "number_of_steps": 189,
         "number_of_moves": 6668,
         "remained_distance": 0
     },
     "scene_2.json": {
         "succeed": true,
-        "total_time": 0.001956462860107422,
+        "total_time": 0.0009980201721191406,
         "number_of_steps": 5,
         "number_of_moves": 7,
         "remained_distance": 0
     },
     "scene_5.json": {
         "succeed": true,
-        "total_time": 0.004992485046386719,
+        "total_time": 0.0029883384704589844,
         "number_of_steps": 7,
         "number_of_moves": 21,
         "remained_distance": 0
     },
     "simple_election.json": {
         "succeed": true,
-        "total_time": 0.003016233444213867,
+        "total_time": 0.0029952526092529297,
         "number_of_steps": 15,
         "number_of_moves": 36,
         "remained_distance": 0
     },
     "small_free_002_10x10_50_50.instance.json": {
         "succeed": true,
-        "total_time": 0.3450736999511719,
+        "total_time": 0.22935700416564941,
         "number_of_steps": 123,
         "number_of_moves": 1278,
         "remained_distance": 0
     },
     "small_free_005_20x20_20_80.instance.json": {
         "succeed": true,
-        "total_time": 0.2603037357330322,
+        "total_time": 0.19450950622558594,
         "number_of_steps": 70,
         "number_of_moves": 1606,
         "remained_distance": 0
     },
     "socg2021_108.instance.json": {
         "succeed": true,
-        "total_time": 0.4916527271270752,
+        "total_time": 0.36897993087768555,
         "number_of_steps": 123,
         "number_of_moves": 3296,
         "remained_distance": 0
     },
     "the_king_94.instance.json": {
         "succeed": true,
-        "total_time": 0.344052791595459,
+        "total_time": 0.22237420082092285,
         "number_of_steps": 100,
         "number_of_moves": 3361,
         "remained_distance": 0
