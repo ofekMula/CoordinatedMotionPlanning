@@ -1,15 +1,18 @@
 import networkx as nx
+import tqdm
+
 import utils
 import os
 import time
-from logbook import Logger, INFO, WARNING
+from logbook import Logger, INFO, WARNING, ERROR
 import sys
 from logbook_utils import ColoredStreamHandler
 from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED
 from utils import RIGHT, DOWN, LEFT, UP
 
 ColoredStreamHandler(sys.stdout).push_application()
-log: Logger
+log = Logger('Base')
+root_log = log
 
 
 def get_all_blocked_directions(robot, blocked_permanent):
@@ -373,7 +376,7 @@ def subtract_pos(current_pos, next_pos):
 
 def solve(infile: str, outfile: str):
     global log
-    log = Logger(os.path.split(infile)[1], level=WARNING)
+    log = Logger(os.path.split(infile)[1], level=ERROR)
     start_time = time.time()
 
     robots, obstacles, name = utils.read_scene(infile)
@@ -381,6 +384,7 @@ def solve(infile: str, outfile: str):
     grid = create_grid(robots, invalid_positions)
     graph = create_graph(grid, invalid_positions)
     remained_distance = update_robots_distances(robots, graph)
+    start_distance = remained_distance
     log.info(f'Started! {remained_distance} distance')
     robots = sort_robots(robots)
     robots_dsts = list(map(lambda robot: robot.target_pos, robots))
@@ -409,25 +413,28 @@ def solve(infile: str, outfile: str):
     total_time = time.time() - start_time
     if not is_not_finished(robots):
         log.info(f'Finished! {total_time}s, {step_number} steps, {total_moves} moves, {remained_distance} distance')
+        root_log.warn('Success!')
         return {'succeed': True, 'total_time': total_time, 'number_of_steps': step_number,
-                'number_of_moves': total_moves, 'remained_distance': remained_distance}
+                'number_of_moves': total_moves, 'remained_distance': remained_distance,
+                'start_distance': start_distance}
     else:
         log.info(f'Stuck! {total_time}s, {step_number} steps, {total_moves} moves, {remained_distance} distance')
         return {'succeed': False, 'total_time': total_time, 'number_of_steps': step_number,
-                'number_of_moves': total_moves, 'remained_distance': remained_distance}
+                'number_of_moves': total_moves, 'remained_distance': remained_distance,
+                'start_distance': start_distance}
 
 
 def main():
     start_time = time.time()
-    metadata = dict()
-    for file_name in os.listdir('../tests/inputs/'):
-        if file_name.startswith('large') or not file_name.endswith('.json'):
-            continue
-        metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    utils.write_metadata(metadata)
-    # file_name = 'large_free_000_75x75_30_1688.instance.json'
-    metadata[file_name] = solve(infile=f'../tests/inputs/{file_name}', outfile=f'../tests/outputs/{file_name}')
-    utils.write_metadata(metadata)
+    metadata = utils.load_metadata()
+    for path in ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform',
+                 '../tests/inputs/all/images']:
+        files = [file_name for file_name in os.listdir(path) if
+                 not (not file_name.endswith('.json') or file_name in metadata.keys())]
+        for file_name in tqdm.tqdm(sorted(files, key=lambda n: os.path.getsize(f'{path}/{n}'))):
+            root_log.info(f'Solving {file_name}')
+            metadata[file_name] = solve(f'{path}/{file_name}', f'{path.replace("/inputs", "/outputs")}/{file_name}')
+            utils.write_metadata(metadata)
     log.error(f'Total time: {time.time() - start_time}s')
 
 

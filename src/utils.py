@@ -34,3 +34,11 @@ def write_solution(steps, name, outfile):
 def write_metadata(metadata):
     with open('../tests/actual_metadata.json', 'w') as f:
         f.write(json.dumps(metadata, indent=4))
+
+
+def load_metadata():
+    try:
+        with open('../tests/actual_metadata.json', 'r') as f:
+            return json.load(f)
+    except Exception:
+        return dict()
