@@ -16,11 +16,11 @@
         "start_distance": 246
     },
     "small_free_001_10x10_40_40.instance.json": {
-        "succeed": false,
-        "total_time": 0.1806635856628418,
-        "number_of_steps": 80,
-        "number_of_moves": 768,
-        "remained_distance": 12,
+        "succeed": true,
+        "total_time": 0.15785646438598633,
+        "number_of_steps": 88,
+        "number_of_moves": 832,
+        "remained_distance": 0,
         "start_distance": 376
     }
 }

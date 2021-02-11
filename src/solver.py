@@ -380,7 +380,7 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
         stuck_robots.append(robot)
     else:
         robot.stuck_count += 1
-    return total_moves
+    return total_moves, next_direction
 
 
 def subtract_pos(current_pos, next_pos):
@@ -407,14 +407,61 @@ def solve(infile: str, outfile: str, level=ERROR):
     while is_not_finished(robots) and is_not_stuck(steps):  # while not all robots finished
         steps.append(dict())  # each step holds dictionary <robot_index,next_direction>
         stuck_robots = []
-        for robot in robots:  # move each robot accordingly to its priority
+        stuck_hard_robots = [robot for robot in robots if robot.stuck_count > 10][:1]
+        right_robots, up_robots, down_robots, left_robots = [], [], [], []
+        for robot in stuck_hard_robots:
+            log.critical(f'STUCK HARD ROBOT {robot.index}, count={robot.stuck_count}!!!')
+            robot_pos = robot.current_pos
+            right_robots = [robot for robot in robots if robot.current_pos == utils.calc_next_pos(robot_pos, RIGHT)]
+            left_robots = [robot for robot in robots if robot.current_pos == utils.calc_next_pos(robot_pos, LEFT)]
+            up_robots = [robot for robot in robots if robot.current_pos == utils.calc_next_pos(robot_pos, UP)]
+            down_robots = [robot for robot in robots if robot.current_pos == utils.calc_next_pos(robot_pos, DOWN)]
+            if len(right_robots) > 0:
+                right_robots[0].prev_pos = None
+                right_robots[0].target_pos = utils.calc_next_pos(right_robots[0].target_pos, RIGHT)
+                total_moves, direct = turn(right_robots[0], invalid_positions, steps, step_number, total_moves,
+                                           stuck_robots, False, robots_dsts)
+                right_robots[0].target_pos = utils.calc_next_pos(right_robots[0].target_pos, LEFT)
+                if right_robots[0].current_pos != utils.calc_next_pos(robot_pos, RIGHT):
+                    invalid_positions[utils.calc_next_pos(robot_pos, RIGHT)] = Occupied(TEMPORARY_OCCUPIED, direct)
+            if len(left_robots) > 0:
+                left_robots[0].prev_pos = None
+                left_robots[0].target_pos = utils.calc_next_pos(left_robots[0].target_pos, LEFT)
+                total_moves, direct = turn(left_robots[0], invalid_positions, steps, step_number, total_moves,
+                                           stuck_robots, False, robots_dsts)
+                left_robots[0].target_pos = utils.calc_next_pos(left_robots[0].target_pos, RIGHT)
+                if left_robots[0].current_pos != utils.calc_next_pos(robot_pos, LEFT):
+                    invalid_positions[utils.calc_next_pos(robot_pos, LEFT)] = Occupied(TEMPORARY_OCCUPIED, direct)
+            if len(up_robots) > 0:
+                up_robots[0].prev_pos = None
+                up_robots[0].target_pos = utils.calc_next_pos(up_robots[0].target_pos, UP)
+                total_moves, direct = turn(up_robots[0], invalid_positions, steps, step_number, total_moves,
+                                           stuck_robots, False, robots_dsts)
+                up_robots[0].target_pos = utils.calc_next_pos(up_robots[0].target_pos, DOWN)
+                if up_robots[0].current_pos != utils.calc_next_pos(robot_pos, UP):
+                    invalid_positions[utils.calc_next_pos(robot_pos, UP)] = Occupied(TEMPORARY_OCCUPIED, direct)
+            if len(down_robots) > 0:
+                down_robots[0].prev_pos = None
+                down_robots[0].target_pos = utils.calc_next_pos(down_robots[0].target_pos, DOWN)
+                total_moves, direct = turn(down_robots[0], invalid_positions, steps, step_number, total_moves,
+                                           stuck_robots, False, robots_dsts)
+                down_robots[0].target_pos = utils.calc_next_pos(down_robots[0].target_pos, UP)
+                if down_robots[0].current_pos != utils.calc_next_pos(robot_pos, DOWN):
+                    invalid_positions[utils.calc_next_pos(robot_pos, DOWN)] = Occupied(TEMPORARY_OCCUPIED, direct)
+            robot.prev_pos = None
+            robot.way_blocked = []
+            total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,
+                                  robots_dsts)
+        turn_robots = [robot for robot in robots if
+                       robot not in (stuck_hard_robots + right_robots + up_robots + down_robots + left_robots)]
+        for robot in turn_robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
-                total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,
-                                   robots_dsts)
+                total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,
+                                      robots_dsts)
         for robot in stuck_robots:  # move each robot accordingly to its priority
             if robot.current_pos != robot.target_pos:
-                total_moves = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,
-                                   robots_dsts)
+                total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,
+                                      robots_dsts)
         robots = [r for r in robots if r not in stuck_robots] + stuck_robots
         clean_invalid_position(invalid_positions)
         step_number += 1
