@@ -1,26 +1,98 @@
 {
-    "small_004_20x20_20_61.instance.json": {
-        "succeed": false,
-        "total_time": 3.9245357513427734,
-        "number_of_steps": 201,
-        "number_of_moves": 4198,
-        "remained_distance": 288,
-        "start_distance": 1205
-    },
-    "small_free_000_10x10_30_30.instance.json": {
-        "succeed": true,
-        "total_time": 0.021225452423095703,
-        "number_of_steps": 21,
-        "number_of_moves": 269,
-        "remained_distance": 0,
-        "start_distance": 246
-    },
     "small_free_001_10x10_40_40.instance.json": {
         "succeed": true,
-        "total_time": 0.15785646438598633,
+        "total_time": 0.16686272621154785,
         "number_of_steps": 88,
         "number_of_moves": 832,
         "remained_distance": 0,
         "start_distance": 376
+    },
+    "scene_2.json": {
+        "succeed": true,
+        "total_time": 0.001995086669921875,
+        "number_of_steps": 5,
+        "number_of_moves": 7,
+        "remained_distance": 0,
+        "start_distance": 11
+    },
+    "simple_election.json": {
+        "succeed": true,
+        "total_time": 0.002991914749145508,
+        "number_of_steps": 15,
+        "number_of_moves": 36,
+        "remained_distance": 0,
+        "start_distance": 40
+    },
+    "scene_5.json": {
+        "succeed": true,
+        "total_time": 0.002994060516357422,
+        "number_of_steps": 7,
+        "number_of_moves": 21,
+        "remained_distance": 0,
+        "start_distance": 31
+    },
+    "small_free_002_10x10_50_50.instance.json": {
+        "succeed": false,
+        "total_time": 0.0907602310180664,
+        "number_of_steps": 201,
+        "number_of_moves": 1646,
+        "remained_distance": 34,
+        "start_distance": 455
+    },
+    "the_king_94.instance.json": {
+        "succeed": true,
+        "total_time": 0.16658353805541992,
+        "number_of_steps": 152,
+        "number_of_moves": 3735,
+        "remained_distance": 0,
+        "start_distance": 2248
+    },
+    "socg2021_108.instance.json": {
+        "succeed": true,
+        "total_time": 0.1495990753173828,
+        "number_of_steps": 112,
+        "number_of_moves": 3372,
+        "remained_distance": 0,
+        "start_distance": 2433
+    },
+    "election_109.instance.json": {
+        "succeed": false,
+        "total_time": 1.4447157382965088,
+        "number_of_steps": 201,
+        "number_of_moves": 4714,
+        "remained_distance": 64,
+        "start_distance": 2333
+    },
+    "small_free_005_20x20_20_80.instance.json": {
+        "succeed": true,
+        "total_time": 0.08580279350280762,
+        "number_of_steps": 103,
+        "number_of_moves": 1640,
+        "remained_distance": 0,
+        "start_distance": 1314
+    },
+    "buffalo_free_000_25x25_20_125.instance.json": {
+        "succeed": true,
+        "total_time": 0.14159226417541504,
+        "number_of_steps": 149,
+        "number_of_moves": 2963,
+        "remained_distance": 0,
+        "start_distance": 1950
+    },
+    "medium_free_000_30x30_20_180.instance.json": {
+        "succeed": true,
+        "total_time": 0.3291137218475342,
+        "number_of_steps": 141,
+        "number_of_moves": 5654,
+        "remained_distance": 0,
+        "start_distance": 3846
+    },
+    "medium_free_002_30x30_20_180.instance.json": {
+        "succeed": false,
+        "total_time": 0.44482851028442383,
+        "number_of_steps": 201,
+        "number_of_moves": 7350,
+        "remained_distance": 46,
+        "start_distance": 3214
     }
 }
