@@ -23,3 +23,5 @@ class Robot:
         self.last_move_direction = 'E'
         self.last_moves = list()
         self.get_backs = defaultdict(int)
+        self.self_block = list()
+        self.stuck_count = 0
