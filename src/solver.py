@@ -219,7 +219,6 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
             robot.path = robot.path[1:]
             return next_pos, go_direction
         else:
-
             robot.path = []
 
     for go_condition, go_direction in zip(
@@ -241,19 +240,23 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                 directions_to_check.append(go_direction)
                 next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
                 if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
-                    if (next_pos != robot.prev_pos or
-                        abs_distance(next_pos, robot.target_pos) > abs_distance(robot.current_pos, robot.target_pos)) \
-                            and is_way_not_blocked(robot, next_pos, go_direction):
-                        return next_pos, go_direction
+                    if is_way_not_blocked(robot, next_pos, go_direction):
+                        if next_pos != robot.prev_pos:
+                            return next_pos, go_direction
+                        if abs_distance(next_pos, robot.target_pos) > abs_distance(robot.current_pos, robot.target_pos) \
+                                and robot.get_backs[next_pos] < 3:
+                            return next_pos, go_direction
 
         for direction in directions_to_check:
             go_direction = utils.OPPOSING_DIRECTION[direction]
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
             if next_pos not in invalid_positions or invalid_positions[next_pos].direction == go_direction:
-                if (next_pos != robot.prev_pos or
-                    abs_distance(next_pos, robot.target_pos) > abs_distance(robot.current_pos, robot.target_pos)) \
-                        and is_way_not_blocked(robot, next_pos, go_direction):
-                    return next_pos, go_direction
+                if is_way_not_blocked(robot, next_pos, go_direction):
+                    if next_pos != robot.prev_pos:
+                        return next_pos, go_direction
+                    if abs_distance(next_pos, robot.target_pos) > abs_distance(robot.current_pos, robot.target_pos) \
+                            and robot.get_backs[next_pos] < 3:
+                        return next_pos, go_direction
 
             if len(valid_directions) == 1:
                 return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
@@ -424,13 +427,13 @@ def solve(infile: str, outfile: str, level=ERROR):
                 'start_distance': start_distance}
 
 
-def main(custom_file=None):
+def main(custom_file=None, dirs=[], do_all=False):
     start_time = time.time()
     metadata = utils.load_metadata()
-    for path in ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform',
-                 '../tests/inputs/all/images']:
+    for path in dirs:
         files = [file_name for file_name in os.listdir(path) if
-                 file_name.endswith('.json') and (file_name not in metadata.keys() or custom_file == file_name)]
+                 file_name.endswith('.json') and (
+                         file_name not in metadata.keys() or custom_file == file_name or do_all)]
         for file_name in tqdm.tqdm(sorted(files, key=lambda n: os.path.getsize(f'{path}/{n}'))):
             if custom_file and file_name != custom_file:
                 continue
@@ -439,7 +442,11 @@ def main(custom_file=None):
                                         DEBUG if custom_file else ERROR)
             utils.write_metadata(metadata)
     log.error(f'Total time: {time.time() - start_time}s')
+    log.error(f'Total Success: {len([m for m in metadata.values() if m["succeed"]])}')
+    log.error(f'Total Failed: {len([m for m in metadata.values() if not m["succeed"]])}')
 
 
 if __name__ == "__main__":
-    main('small_004_20x20_20_61.instance.json')
+    main('small_004_20x20_20_61.instance.json',
+         ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform', '../tests/inputs/all/images'])
+    main(None, ['../tests/inputs'], do_all=True)
