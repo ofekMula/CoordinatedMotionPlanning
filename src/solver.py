@@ -4,7 +4,7 @@ import tqdm
 import utils
 import os
 import time
-from logbook import Logger, INFO, WARNING, ERROR
+from logbook import Logger, INFO, WARNING, ERROR, DEBUG
 import sys
 from logbook_utils import ColoredStreamHandler
 from occupied import Occupied, PERMANENT_OCCUPIED, TEMPORARY_OCCUPIED
@@ -374,9 +374,9 @@ def subtract_pos(current_pos, next_pos):
     return next_pos[0] - current_pos[0], next_pos[1] - current_pos[1]
 
 
-def solve(infile: str, outfile: str):
+def solve(infile: str, outfile: str, level=ERROR):
     global log
-    log = Logger(os.path.split(infile)[1], level=ERROR)
+    log = Logger(os.path.split(infile)[1], level=level)
     start_time = time.time()
 
     robots, obstacles, name = utils.read_scene(infile)
@@ -424,19 +424,22 @@ def solve(infile: str, outfile: str):
                 'start_distance': start_distance}
 
 
-def main():
+def main(custom_file=None):
     start_time = time.time()
     metadata = utils.load_metadata()
     for path in ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform',
                  '../tests/inputs/all/images']:
         files = [file_name for file_name in os.listdir(path) if
-                 not (not file_name.endswith('.json') or file_name in metadata.keys())]
+                 file_name.endswith('.json') and (file_name not in metadata.keys() or custom_file == file_name)]
         for file_name in tqdm.tqdm(sorted(files, key=lambda n: os.path.getsize(f'{path}/{n}'))):
+            if custom_file and file_name != custom_file:
+                continue
             root_log.info(f'Solving {file_name}')
-            metadata[file_name] = solve(f'{path}/{file_name}', f'{path.replace("/inputs", "/outputs")}/{file_name}')
+            metadata[file_name] = solve(f'{path}/{file_name}', f'{path.replace("/inputs", "/outputs")}/{file_name}',
+                                        DEBUG if custom_file else ERROR)
             utils.write_metadata(metadata)
     log.error(f'Total time: {time.time() - start_time}s')
 
 
 if __name__ == "__main__":
-    main()
+    main('small_004_20x20_20_61.instance.json')

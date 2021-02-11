@@ -177,7 +177,7 @@
     },
     "small_004_20x20_20_61.instance.json": {
         "succeed": false,
-        "total_time": 1.8809678554534912,
+        "total_time": 1.937345266342163,
         "number_of_steps": 201,
         "number_of_moves": 3482,
         "remained_distance": 6,
@@ -342,5 +342,13 @@
         "number_of_moves": 23964,
         "remained_distance": 383,
         "start_distance": 333
+    },
+    "small_free_014_20x20_70_280.instance.json": {
+        "succeed": false,
+        "total_time": 22.984511613845825,
+        "number_of_steps": 201,
+        "number_of_moves": 24130,
+        "remained_distance": 101,
+        "start_distance": 252
     }
 }
