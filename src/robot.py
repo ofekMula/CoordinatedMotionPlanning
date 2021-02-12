@@ -25,3 +25,4 @@ class Robot:
         self.get_backs = defaultdict(int)
         self.self_block = list()
         self.stuck_count = 0
+        self.way_blocked_special = list()
