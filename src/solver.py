@@ -542,7 +542,8 @@ def solve(infile: str, outfile: str, level=ERROR):
             if robot.current_pos != robot.target_pos:
                 total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,
                                       robots_dsts)
-        robots = [r for r in robots if r not in stuck_robots] + stuck_robots
+        robots = [r for r in stuck_hard_robots] + [r for r in robots if
+                                                   r not in stuck_robots and r not in stuck_hard_robots] + stuck_robots
         clean_invalid_position(invalid_positions)
         step_number += 1
 
@@ -584,7 +585,9 @@ def main(custom_file=None, dirs=tuple(), do_all=False):
 
 
 if __name__ == "__main__":
-    main('small_free_001_10x10_40_40.instance.json',
-         ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform', '../tests/inputs/all/images'])
+    main('small_free_001_10x10_40_40.instance.json', ['../tests/inputs'])
     main(None, ['../tests/inputs'], do_all=True)
     main('buffalo_free_000_25x25_20_125.instance.json', ['../tests/inputs'])
+
+    # main('small_free_001_10x10_40_40.instance.json',
+    #      ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform', '../tests/inputs/all/images'])
