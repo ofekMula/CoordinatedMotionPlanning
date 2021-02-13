@@ -407,7 +407,7 @@ def move_robot(robot, robot_next_pos, invalid_positions, direction):
 
 
 def is_not_finished(robots):
-    # log.debug(f'Finished robots: {sum(robot.current_pos == robot.target_pos for robot in robots)}/{len(robots)}')
+    log.debug(f'Finished robots: {sum(robot.current_pos == robot.target_pos for robot in robots)}/{len(robots)}')
     return not all(robot.current_pos == robot.target_pos for robot in robots)
 
 
@@ -585,9 +585,9 @@ def main(custom_file=None, dirs=tuple(), do_all=False):
 
 
 if __name__ == "__main__":
-    main('small_free_001_10x10_40_40.instance.json', ['../tests/inputs'])
-    main(None, ['../tests/inputs'], do_all=True)
-    main('buffalo_free_000_25x25_20_125.instance.json', ['../tests/inputs'])
+    # main('medium_free_002_30x30_20_180.instance.json', ['../tests/inputs'])
+    # main(None, ['../tests/inputs'], do_all=True)
+    # main('buffalo_free_000_25x25_20_125.instance.json', ['../tests/inputs'])
 
-    # main('small_free_001_10x10_40_40.instance.json',
-    #      ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform', '../tests/inputs/all/images'])
+    main(None,
+         ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform', '../tests/inputs/all/images'])

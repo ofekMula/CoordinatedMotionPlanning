@@ -1,39 +1,15 @@
 {
     "small_free_001_10x10_40_40.instance.json": {
         "succeed": true,
-        "total_time": 0.03989362716674805,
+        "total_time": 0.047872066497802734,
         "number_of_steps": 86,
         "number_of_moves": 802,
         "remained_distance": 0,
         "start_distance": 376
     },
-    "scene_2.json": {
-        "succeed": true,
-        "total_time": 0.001995086669921875,
-        "number_of_steps": 5,
-        "number_of_moves": 7,
-        "remained_distance": 0,
-        "start_distance": 11
-    },
-    "simple_election.json": {
-        "succeed": true,
-        "total_time": 0.0029754638671875,
-        "number_of_steps": 15,
-        "number_of_moves": 36,
-        "remained_distance": 0,
-        "start_distance": 40
-    },
-    "scene_5.json": {
-        "succeed": true,
-        "total_time": 0.0029916763305664062,
-        "number_of_steps": 7,
-        "number_of_moves": 21,
-        "remained_distance": 0,
-        "start_distance": 31
-    },
     "small_free_002_10x10_50_50.instance.json": {
         "succeed": false,
-        "total_time": 0.0797877311706543,
+        "total_time": 0.0848093032836914,
         "number_of_steps": 201,
         "number_of_moves": 1591,
         "remained_distance": 61,
@@ -41,7 +17,7 @@
     },
     "the_king_94.instance.json": {
         "succeed": true,
-        "total_time": 0.2712109088897705,
+        "total_time": 0.17154502868652344,
         "number_of_steps": 111,
         "number_of_moves": 3413,
         "remained_distance": 0,
@@ -49,7 +25,7 @@
     },
     "socg2021_108.instance.json": {
         "succeed": true,
-        "total_time": 0.1795520782470703,
+        "total_time": 0.23932623863220215,
         "number_of_steps": 112,
         "number_of_moves": 3362,
         "remained_distance": 0,
@@ -57,7 +33,7 @@
     },
     "election_109.instance.json": {
         "succeed": true,
-        "total_time": 0.22739052772521973,
+        "total_time": 0.5086386203765869,
         "number_of_steps": 136,
         "number_of_moves": 4054,
         "remained_distance": 0,
@@ -65,7 +41,7 @@
     },
     "small_free_005_20x20_20_80.instance.json": {
         "succeed": true,
-        "total_time": 0.08871912956237793,
+        "total_time": 0.0967094898223877,
         "number_of_steps": 95,
         "number_of_moves": 1632,
         "remained_distance": 0,
@@ -73,7 +49,7 @@
     },
     "buffalo_free_000_25x25_20_125.instance.json": {
         "succeed": true,
-        "total_time": 0.1937708854675293,
+        "total_time": 0.21639132499694824,
         "number_of_steps": 143,
         "number_of_moves": 3005,
         "remained_distance": 0,
@@ -81,7 +57,7 @@
     },
     "medium_free_000_30x30_20_180.instance.json": {
         "succeed": true,
-        "total_time": 0.36400771141052246,
+        "total_time": 0.4428517818450928,
         "number_of_steps": 141,
         "number_of_moves": 5654,
         "remained_distance": 0,
@@ -89,10 +65,1370 @@
     },
     "medium_free_002_30x30_20_180.instance.json": {
         "succeed": false,
-        "total_time": 0.3810107707977295,
+        "total_time": 0.3828606605529785,
         "number_of_steps": 201,
         "number_of_moves": 6497,
         "remained_distance": 67,
         "start_distance": 3214
+    },
+    "small_000_10x10_20_10.instance.json": {
+        "succeed": true,
+        "total_time": 0.011998891830444336,
+        "number_of_steps": 43,
+        "number_of_moves": 154,
+        "remained_distance": 0,
+        "start_distance": 122
+    },
+    "small_free_000_10x10_30_30.instance.json": {
+        "succeed": true,
+        "total_time": 0.01296377182006836,
+        "number_of_steps": 23,
+        "number_of_moves": 269,
+        "remained_distance": 0,
+        "start_distance": 246
+    },
+    "small_001_10x10_40_30.instance.json": {
+        "succeed": false,
+        "total_time": 0.05623626708984375,
+        "number_of_steps": 201,
+        "number_of_moves": 906,
+        "remained_distance": 8,
+        "start_distance": 381
+    },
+    "small_002_10x10_60_33.instance.json": {
+        "succeed": false,
+        "total_time": 0.044951438903808594,
+        "number_of_steps": 201,
+        "number_of_moves": 970,
+        "remained_distance": 3,
+        "start_distance": 131
+    },
+    "small_003_10x10_90_46.instance.json": {
+        "succeed": false,
+        "total_time": 0.1095128059387207,
+        "number_of_steps": 201,
+        "number_of_moves": 2074,
+        "remained_distance": 0,
+        "start_distance": 93
+    },
+    "small_free_003_10x10_70_70.instance.json": {
+        "succeed": false,
+        "total_time": 0.23133301734924316,
+        "number_of_steps": 201,
+        "number_of_moves": 3979,
+        "remained_distance": 48,
+        "start_distance": 320
+    },
+    "small_005_10x10_90_63.instance.json": {
+        "succeed": false,
+        "total_time": 0.25833940505981445,
+        "number_of_steps": 201,
+        "number_of_moves": 4745,
+        "remained_distance": 28,
+        "start_distance": 54
+    },
+    "small_free_004_20x20_20_80.instance.json": {
+        "succeed": true,
+        "total_time": 0.07882094383239746,
+        "number_of_steps": 39,
+        "number_of_moves": 1462,
+        "remained_distance": 0,
+        "start_distance": 1264
+    },
+    "small_free_006_10x10_90_90.instance.json": {
+        "succeed": false,
+        "total_time": 0.3990461826324463,
+        "number_of_steps": 201,
+        "number_of_moves": 7336,
+        "remained_distance": 14,
+        "start_distance": 106
+    },
+    "small_free_007_10x10_90_90.instance.json": {
+        "succeed": false,
+        "total_time": 0.36360836029052734,
+        "number_of_steps": 201,
+        "number_of_moves": 6817,
+        "remained_distance": 42,
+        "start_distance": 74
+    },
+    "small_004_20x20_20_61.instance.json": {
+        "succeed": false,
+        "total_time": 0.23477554321289062,
+        "number_of_steps": 201,
+        "number_of_moves": 3981,
+        "remained_distance": 53,
+        "start_distance": 1205
+    },
+    "small_006_20x20_20_71.instance.json": {
+        "succeed": true,
+        "total_time": 0.1196439266204834,
+        "number_of_steps": 155,
+        "number_of_moves": 2007,
+        "remained_distance": 0,
+        "start_distance": 1115
+    },
+    "small_008_20x20_40_83.instance.json": {
+        "succeed": false,
+        "total_time": 0.38153553009033203,
+        "number_of_steps": 201,
+        "number_of_moves": 6539,
+        "remained_distance": 101,
+        "start_distance": 329
+    },
+    "small_007_20x20_40_82.instance.json": {
+        "succeed": false,
+        "total_time": 0.30273008346557617,
+        "number_of_steps": 201,
+        "number_of_moves": 6336,
+        "remained_distance": 226,
+        "start_distance": 931
+    },
+    "small_free_009_20x20_40_160.instance.json": {
+        "succeed": false,
+        "total_time": 0.4512217044830322,
+        "number_of_steps": 201,
+        "number_of_moves": 8106,
+        "remained_distance": 221,
+        "start_distance": 2291
+    },
+    "small_free_008_20x20_40_160.instance.json": {
+        "succeed": false,
+        "total_time": 0.7829775810241699,
+        "number_of_steps": 201,
+        "number_of_moves": 9972,
+        "remained_distance": 257,
+        "start_distance": 1669
+    },
+    "medium_000_30x30_20_90.instance.json": {
+        "succeed": false,
+        "total_time": 0.4774158000946045,
+        "number_of_steps": 201,
+        "number_of_moves": 8124,
+        "remained_distance": 833,
+        "start_distance": 2290
+    },
+    "medium_free_001_30x30_20_180.instance.json": {
+        "succeed": false,
+        "total_time": 0.3508422374725342,
+        "number_of_steps": 201,
+        "number_of_moves": 6497,
+        "remained_distance": 28,
+        "start_distance": 2894
+    },
+    "small_010_20x20_50_175.instance.json": {
+        "succeed": false,
+        "total_time": 0.5935256481170654,
+        "number_of_steps": 201,
+        "number_of_moves": 10794,
+        "remained_distance": 335,
+        "start_distance": 1192
+    },
+    "small_009_20x20_50_173.instance.json": {
+        "succeed": false,
+        "total_time": 0.8636791706085205,
+        "number_of_steps": 201,
+        "number_of_moves": 13945,
+        "remained_distance": 615,
+        "start_distance": 1652
+    },
+    "small_013_20x20_50_186.instance.json": {
+        "succeed": false,
+        "total_time": 0.9379868507385254,
+        "number_of_steps": 201,
+        "number_of_moves": 15441,
+        "remained_distance": 883,
+        "start_distance": 1632
+    },
+    "small_free_010_20x20_50_200.instance.json": {
+        "succeed": false,
+        "total_time": 0.8024013042449951,
+        "number_of_steps": 201,
+        "number_of_moves": 12029,
+        "remained_distance": 643,
+        "start_distance": 2615
+    },
+    "small_free_011_20x20_50_200.instance.json": {
+        "succeed": false,
+        "total_time": 0.9339957237243652,
+        "number_of_steps": 201,
+        "number_of_moves": 13513,
+        "remained_distance": 752,
+        "start_distance": 1795
+    },
+    "medium_001_30x30_20_145.instance.json": {
+        "succeed": false,
+        "total_time": 0.7977008819580078,
+        "number_of_steps": 201,
+        "number_of_moves": 12007,
+        "remained_distance": 753,
+        "start_distance": 2526
+    },
+    "small_011_20x20_90_183.instance.json": {
+        "succeed": false,
+        "total_time": 1.1072545051574707,
+        "number_of_steps": 201,
+        "number_of_moves": 18375,
+        "remained_distance": 37,
+        "start_distance": 59
+    },
+    "small_012_20x20_70_186.instance.json": {
+        "succeed": false,
+        "total_time": 1.2899537086486816,
+        "number_of_steps": 201,
+        "number_of_moves": 18910,
+        "remained_distance": 258,
+        "start_distance": 420
+    },
+    "small_free_012_20x20_60_240.instance.json": {
+        "succeed": false,
+        "total_time": 1.0674011707305908,
+        "number_of_steps": 201,
+        "number_of_moves": 18147,
+        "remained_distance": 236,
+        "start_distance": 483
+    },
+    "small_free_013_20x20_60_240.instance.json": {
+        "succeed": false,
+        "total_time": 1.2059409618377686,
+        "number_of_steps": 201,
+        "number_of_moves": 19097,
+        "remained_distance": 477,
+        "start_distance": 1454
+    },
+    "medium_002_30x30_30_162.instance.json": {
+        "succeed": false,
+        "total_time": 1.1080925464630127,
+        "number_of_steps": 201,
+        "number_of_moves": 17954,
+        "remained_distance": 2277,
+        "start_distance": 3323
+    },
+    "small_014_20x20_90_200.instance.json": {
+        "succeed": false,
+        "total_time": 1.2921817302703857,
+        "number_of_steps": 201,
+        "number_of_moves": 19966,
+        "remained_distance": 93,
+        "start_distance": 231
+    },
+    "small_015_20x20_90_207.instance.json": {
+        "succeed": false,
+        "total_time": 1.5418212413787842,
+        "number_of_steps": 201,
+        "number_of_moves": 23884,
+        "remained_distance": 317,
+        "start_distance": 333
+    },
+    "small_free_014_20x20_70_280.instance.json": {
+        "succeed": false,
+        "total_time": 1.7472927570343018,
+        "number_of_steps": 201,
+        "number_of_moves": 24015,
+        "remained_distance": 141,
+        "start_distance": 252
+    },
+    "small_free_015_20x20_70_280.instance.json": {
+        "succeed": false,
+        "total_time": 1.91487717628479,
+        "number_of_steps": 201,
+        "number_of_moves": 27611,
+        "remained_distance": 291,
+        "start_distance": 535
+    },
+    "small_016_20x20_80_276.instance.json": {
+        "succeed": false,
+        "total_time": 1.7882144451141357,
+        "number_of_steps": 201,
+        "number_of_moves": 26513,
+        "remained_distance": 118,
+        "start_distance": 181
+    },
+    "small_free_017_20x20_80_320.instance.json": {
+        "succeed": false,
+        "total_time": 2.755934000015259,
+        "number_of_steps": 201,
+        "number_of_moves": 31699,
+        "remained_distance": 272,
+        "start_distance": 463
+    },
+    "small_free_016_20x20_80_320.instance.json": {
+        "succeed": false,
+        "total_time": 2.3567025661468506,
+        "number_of_steps": 201,
+        "number_of_moves": 31138,
+        "remained_distance": 424,
+        "start_distance": 562
+    },
+    "small_018_20x20_90_324.instance.json": {
+        "succeed": false,
+        "total_time": 2.397020101547241,
+        "number_of_steps": 201,
+        "number_of_moves": 32863,
+        "remained_distance": 166,
+        "start_distance": 148
+    },
+    "small_017_20x20_90_322.instance.json": {
+        "succeed": false,
+        "total_time": 2.3536999225616455,
+        "number_of_steps": 201,
+        "number_of_moves": 33459,
+        "remained_distance": 98,
+        "start_distance": 304
+    },
+    "medium_free_003_40x40_20_320.instance.json": {
+        "succeed": false,
+        "total_time": 0.797109842300415,
+        "number_of_steps": 201,
+        "number_of_moves": 12607,
+        "remained_distance": 10,
+        "start_distance": 7856
+    },
+    "small_019_20x20_90_329.instance.json": {
+        "succeed": false,
+        "total_time": 2.331756591796875,
+        "number_of_steps": 201,
+        "number_of_moves": 32611,
+        "remained_distance": 212,
+        "start_distance": 97
+    },
+    "small_free_018_20x20_90_360.instance.json": {
+        "succeed": false,
+        "total_time": 2.58231782913208,
+        "number_of_steps": 201,
+        "number_of_moves": 35838,
+        "remained_distance": 310,
+        "start_distance": 319
+    },
+    "small_free_019_20x20_90_360.instance.json": {
+        "succeed": false,
+        "total_time": 2.486553192138672,
+        "number_of_steps": 201,
+        "number_of_moves": 34918,
+        "remained_distance": 52,
+        "start_distance": 176
+    },
+    "medium_003_50x50_20_256.instance.json": {
+        "succeed": false,
+        "total_time": 2.867490530014038,
+        "number_of_steps": 201,
+        "number_of_moves": 30920,
+        "remained_distance": 7896,
+        "start_distance": 8089
+    },
+    "medium_005_30x30_90_407.instance.json": {
+        "succeed": false,
+        "total_time": 4.965111494064331,
+        "number_of_steps": 201,
+        "number_of_moves": 42565,
+        "remained_distance": 534,
+        "start_distance": 535
+    },
+    "medium_free_004_40x40_30_480.instance.json": {
+        "succeed": false,
+        "total_time": 3.4009029865264893,
+        "number_of_steps": 201,
+        "number_of_moves": 37502,
+        "remained_distance": 1852,
+        "start_distance": 9410
+    },
+    "medium_free_005_50x50_20_500.instance.json": {
+        "succeed": false,
+        "total_time": 2.1223225593566895,
+        "number_of_steps": 201,
+        "number_of_moves": 25109,
+        "remained_distance": 35,
+        "start_distance": 16958
+    },
+    "medium_free_006_30x30_60_540.instance.json": {
+        "succeed": false,
+        "total_time": 3.7789306640625,
+        "number_of_steps": 201,
+        "number_of_moves": 49342,
+        "remained_distance": 1696,
+        "start_distance": 2450
+    },
+    "medium_004_50x50_20_306.instance.json": {
+        "succeed": false,
+        "total_time": 2.8309526443481445,
+        "number_of_steps": 201,
+        "number_of_moves": 33475,
+        "remained_distance": 7650,
+        "start_distance": 14716
+    },
+    "medium_006_40x40_40_502.instance.json": {
+        "succeed": false,
+        "total_time": 3.9750559329986572,
+        "number_of_steps": 201,
+        "number_of_moves": 50976,
+        "remained_distance": 11388,
+        "start_distance": 16117
+    },
+    "medium_free_007_30x30_70_630.instance.json": {
+        "succeed": false,
+        "total_time": 4.851911783218384,
+        "number_of_steps": 201,
+        "number_of_moves": 60395,
+        "remained_distance": 741,
+        "start_distance": 1428
+    },
+    "medium_007_30x30_90_584.instance.json": {
+        "succeed": false,
+        "total_time": 4.6749091148376465,
+        "number_of_steps": 201,
+        "number_of_moves": 62960,
+        "remained_distance": 536,
+        "start_distance": 285
+    },
+    "medium_008_30x30_90_693.instance.json": {
+        "succeed": false,
+        "total_time": 6.201512336730957,
+        "number_of_steps": 201,
+        "number_of_moves": 68375,
+        "remained_distance": 187,
+        "start_distance": 108
+    },
+    "medium_free_008_50x50_30_750.instance.json": {
+        "succeed": false,
+        "total_time": 4.2770233154296875,
+        "number_of_steps": 201,
+        "number_of_moves": 65686,
+        "remained_distance": 2381,
+        "start_distance": 16297
+    },
+    "medium_010_40x40_90_726.instance.json": {
+        "succeed": false,
+        "total_time": 6.028207302093506,
+        "number_of_steps": 201,
+        "number_of_moves": 80012,
+        "remained_distance": 391,
+        "start_distance": 640
+    },
+    "medium_011_40x40_50_727.instance.json": {
+        "succeed": false,
+        "total_time": 5.66183876991272,
+        "number_of_steps": 201,
+        "number_of_moves": 69978,
+        "remained_distance": 5105,
+        "start_distance": 6470
+    },
+    "medium_free_011_30x30_90_810.instance.json": {
+        "succeed": false,
+        "total_time": 7.097347736358643,
+        "number_of_steps": 201,
+        "number_of_moves": 78411,
+        "remained_distance": 179,
+        "start_distance": 145
+    },
+    "medium_free_009_40x40_50_800.instance.json": {
+        "succeed": false,
+        "total_time": 5.894230604171753,
+        "number_of_steps": 201,
+        "number_of_moves": 71743,
+        "remained_distance": 10878,
+        "start_distance": 19327
+    },
+    "medium_free_010_30x30_90_810.instance.json": {
+        "succeed": false,
+        "total_time": 6.7325475215911865,
+        "number_of_steps": 201,
+        "number_of_moves": 78136,
+        "remained_distance": 495,
+        "start_distance": 237
+    },
+    "medium_009_50x50_50_706.instance.json": {
+        "succeed": false,
+        "total_time": 6.231323480606079,
+        "number_of_steps": 201,
+        "number_of_moves": 74117,
+        "remained_distance": 12212,
+        "start_distance": 6727
+    },
+    "medium_012_50x50_40_923.instance.json": {
+        "succeed": false,
+        "total_time": 7.840154647827148,
+        "number_of_steps": 201,
+        "number_of_moves": 90389,
+        "remained_distance": 12078,
+        "start_distance": 33161
+    },
+    "medium_free_012_50x50_40_1000.instance.json": {
+        "succeed": false,
+        "total_time": 9.406559467315674,
+        "number_of_steps": 201,
+        "number_of_moves": 90360,
+        "remained_distance": 24752,
+        "start_distance": 38584
+    },
+    "medium_015_50x50_50_1167.instance.json": {
+        "succeed": false,
+        "total_time": 10.528700351715088,
+        "number_of_steps": 201,
+        "number_of_moves": 115249,
+        "remained_distance": 16059,
+        "start_distance": 16855
+    },
+    "medium_016_50x50_50_1180.instance.json": {
+        "succeed": false,
+        "total_time": 10.075177907943726,
+        "number_of_steps": 201,
+        "number_of_moves": 111990,
+        "remained_distance": 13267,
+        "start_distance": 18181
+    },
+    "medium_014_40x40_90_1165.instance.json": {
+        "succeed": false,
+        "total_time": 12.252087831497192,
+        "number_of_steps": 201,
+        "number_of_moves": 111866,
+        "remained_distance": 682,
+        "start_distance": 583
+    },
+    "medium_013_50x50_90_1141.instance.json": {
+        "succeed": false,
+        "total_time": 11.498270750045776,
+        "number_of_steps": 201,
+        "number_of_moves": 119411,
+        "remained_distance": 881,
+        "start_distance": 507
+    },
+    "medium_free_013_50x50_50_1250.instance.json": {
+        "succeed": false,
+        "total_time": 10.977625846862793,
+        "number_of_steps": 201,
+        "number_of_moves": 117339,
+        "remained_distance": 27173,
+        "start_distance": 35886
+    },
+    "large_000_75x75_30_911.instance.json": {
+        "succeed": false,
+        "total_time": 10.036244869232178,
+        "number_of_steps": 201,
+        "number_of_moves": 108653,
+        "remained_distance": 31222,
+        "start_distance": 28587
+    },
+    "medium_017_50x50_90_1202.instance.json": {
+        "succeed": false,
+        "total_time": 12.097471475601196,
+        "number_of_steps": 201,
+        "number_of_moves": 111578,
+        "remained_distance": 539,
+        "start_distance": 379
+    },
+    "medium_free_015_40x40_90_1440.instance.json": {
+        "succeed": false,
+        "total_time": 17.106355905532837,
+        "number_of_steps": 201,
+        "number_of_moves": 133241,
+        "remained_distance": 662,
+        "start_distance": 567
+    },
+    "medium_free_014_40x40_90_1440.instance.json": {
+        "succeed": false,
+        "total_time": 16.71466898918152,
+        "number_of_steps": 201,
+        "number_of_moves": 131355,
+        "remained_distance": 1098,
+        "start_distance": 475
+    },
+    "large_001_75x75_30_1563.instance.json": {
+        "succeed": false,
+        "total_time": 18.255199670791626,
+        "number_of_steps": 201,
+        "number_of_moves": 159433,
+        "remained_distance": 18659,
+        "start_distance": 81705
+    },
+    "large_free_000_75x75_30_1688.instance.json": {
+        "succeed": false,
+        "total_time": 19.590796947479248,
+        "number_of_steps": 201,
+        "number_of_moves": 152200,
+        "remained_distance": 16376,
+        "start_distance": 82544
+    },
+    "large_free_001_75x75_30_1688.instance.json": {
+        "succeed": false,
+        "total_time": 20.330223560333252,
+        "number_of_steps": 201,
+        "number_of_moves": 169492,
+        "remained_distance": 36085,
+        "start_distance": 52396
+    },
+    "medium_free_016_50x50_70_1750.instance.json": {
+        "succeed": false,
+        "total_time": 18.666513919830322,
+        "number_of_steps": 201,
+        "number_of_moves": 165039,
+        "remained_distance": 6560,
+        "start_distance": 5099
+    },
+    "large_002_100x100_30_1692.instance.json": {
+        "succeed": false,
+        "total_time": 39.78929328918457,
+        "number_of_steps": 201,
+        "number_of_moves": 207452,
+        "remained_distance": 93426,
+        "start_distance": 130046
+    },
+    "large_free_002_100x100_20_2000.instance.json": {
+        "succeed": false,
+        "total_time": 30.537023067474365,
+        "number_of_steps": 201,
+        "number_of_moves": 227650,
+        "remained_distance": 27005,
+        "start_distance": 103967
+    },
+    "medium_018_50x50_90_1993.instance.json": {
+        "succeed": false,
+        "total_time": 23.064608335494995,
+        "number_of_steps": 201,
+        "number_of_moves": 182867,
+        "remained_distance": 1319,
+        "start_distance": 917
+    },
+    "large_003_100x100_20_1906.instance.json": {
+        "succeed": false,
+        "total_time": 24.539698600769043,
+        "number_of_steps": 201,
+        "number_of_moves": 207246,
+        "remained_distance": 14499,
+        "start_distance": 101332
+    },
+    "medium_019_50x50_90_2068.instance.json": {
+        "succeed": false,
+        "total_time": 23.82140016555786,
+        "number_of_steps": 201,
+        "number_of_moves": 193035,
+        "remained_distance": 590,
+        "start_distance": 501
+    },
+    "medium_free_018_50x50_90_2250.instance.json": {
+        "succeed": false,
+        "total_time": 25.878122329711914,
+        "number_of_steps": 201,
+        "number_of_moves": 206779,
+        "remained_distance": 707,
+        "start_distance": 266
+    },
+    "medium_free_019_50x50_90_2250.instance.json": {
+        "succeed": false,
+        "total_time": 25.61968994140625,
+        "number_of_steps": 201,
+        "number_of_moves": 202033,
+        "remained_distance": 1130,
+        "start_distance": 526
+    },
+    "medium_free_017_50x50_90_2250.instance.json": {
+        "succeed": false,
+        "total_time": 25.839096546173096,
+        "number_of_steps": 201,
+        "number_of_moves": 200925,
+        "remained_distance": 435,
+        "start_distance": 73
+    },
+    "large_004_100x100_40_2034.instance.json": {
+        "succeed": false,
+        "total_time": 27.874369621276855,
+        "number_of_steps": 201,
+        "number_of_moves": 180008,
+        "remained_distance": 27194,
+        "start_distance": 19847
+    },
+    "large_free_003_75x75_60_3375.instance.json": {
+        "succeed": false,
+        "total_time": 46.315911293029785,
+        "number_of_steps": 201,
+        "number_of_moves": 301792,
+        "remained_distance": 21570,
+        "start_distance": 15797
+    },
+    "large_005_75x75_80_3223.instance.json": {
+        "succeed": false,
+        "total_time": 43.396918535232544,
+        "number_of_steps": 201,
+        "number_of_moves": 296406,
+        "remained_distance": 7528,
+        "start_distance": 5236
+    },
+    "large_free_004_75x75_70_3938.instance.json": {
+        "succeed": false,
+        "total_time": 53.72146439552307,
+        "number_of_steps": 201,
+        "number_of_moves": 355364,
+        "remained_distance": 3075,
+        "start_distance": 2837
+    },
+    "large_006_75x75_90_4599.instance.json": {
+        "succeed": false,
+        "total_time": 69.7866907119751,
+        "number_of_steps": 201,
+        "number_of_moves": 391537,
+        "remained_distance": 1423,
+        "start_distance": 412
+    },
+    "large_007_100x100_90_4706.instance.json": {
+        "succeed": false,
+        "total_time": 73.94521284103394,
+        "number_of_steps": 201,
+        "number_of_moves": 410752,
+        "remained_distance": 3710,
+        "start_distance": 1412
+    },
+    "large_free_005_100x100_50_5000.instance.json": {
+        "succeed": false,
+        "total_time": 95.16584825515747,
+        "number_of_steps": 201,
+        "number_of_moves": 489902,
+        "remained_distance": 269949,
+        "start_distance": 236063
+    },
+    "large_free_006_75x75_90_5063.instance.json": {
+        "succeed": false,
+        "total_time": 79.03536343574524,
+        "number_of_steps": 201,
+        "number_of_moves": 423844,
+        "remained_distance": 1332,
+        "start_distance": 884
+    },
+    "large_008_100x100_60_5682.instance.json": {
+        "succeed": false,
+        "total_time": 88.55101180076599,
+        "number_of_steps": 201,
+        "number_of_moves": 544369,
+        "remained_distance": 90725,
+        "start_distance": 62659
+    },
+    "large_free_007_100x100_60_6000.instance.json": {
+        "succeed": false,
+        "total_time": 95.37656354904175,
+        "number_of_steps": 201,
+        "number_of_moves": 558678,
+        "remained_distance": 31397,
+        "start_distance": 28797
+    },
+    "large_free_008_100x100_80_8000.instance.json": {
+        "succeed": false,
+        "total_time": 145.2669379711151,
+        "number_of_steps": 201,
+        "number_of_moves": 683123,
+        "remained_distance": 4504,
+        "start_distance": 1983
+    },
+    "large_009_100x100_90_8595.instance.json": {
+        "succeed": false,
+        "total_time": 167.19647479057312,
+        "number_of_steps": 201,
+        "number_of_moves": 689881,
+        "remained_distance": 1340,
+        "start_distance": 711
+    },
+    "large_free_009_100x100_90_9000.instance.json": {
+        "succeed": false,
+        "total_time": 178.01580023765564,
+        "number_of_steps": 201,
+        "number_of_moves": 705025,
+        "remained_distance": 1959,
+        "start_distance": 625
+    },
+    "galaxy_cluster_00000_20x20_20_80.instance.json": {
+        "succeed": true,
+        "total_time": 0.06982636451721191,
+        "number_of_steps": 84,
+        "number_of_moves": 1441,
+        "remained_distance": 0,
+        "start_distance": 950
+    },
+    "galaxy_cluster2_00000_20x20_20_80.instance.json": {
+        "succeed": false,
+        "total_time": 0.1216745376586914,
+        "number_of_steps": 201,
+        "number_of_moves": 2143,
+        "remained_distance": 3,
+        "start_distance": 1180
+    },
+    "buffalo_000_25x25_20_63.instance.json": {
+        "succeed": false,
+        "total_time": 0.24534034729003906,
+        "number_of_steps": 201,
+        "number_of_moves": 4897,
+        "remained_distance": 242,
+        "start_distance": 1516
+    },
+    "redblue_00000_20x20_30_113.instance.json": {
+        "succeed": false,
+        "total_time": 0.32115864753723145,
+        "number_of_steps": 201,
+        "number_of_moves": 5278,
+        "remained_distance": 153,
+        "start_distance": 1248
+    },
+    "microbes_00000_20x20_60_110.instance.json": {
+        "succeed": false,
+        "total_time": 0.6308584213256836,
+        "number_of_steps": 201,
+        "number_of_moves": 9582,
+        "remained_distance": 300,
+        "start_distance": 796
+    },
+    "sun_00000_20x20_40_143.instance.json": {
+        "succeed": false,
+        "total_time": 0.6269204616546631,
+        "number_of_steps": 201,
+        "number_of_moves": 9942,
+        "remained_distance": 593,
+        "start_distance": 1063
+    },
+    "london_night_00000_20x20_40_140.instance.json": {
+        "succeed": false,
+        "total_time": 0.6656696796417236,
+        "number_of_steps": 201,
+        "number_of_moves": 9959,
+        "remained_distance": 481,
+        "start_distance": 1731
+    },
+    "clouds_00000_20x20_40_160.instance.json": {
+        "succeed": false,
+        "total_time": 0.5340733528137207,
+        "number_of_steps": 201,
+        "number_of_moves": 9681,
+        "remained_distance": 413,
+        "start_distance": 1923
+    },
+    "algae_00000_20x20_40_160.instance.json": {
+        "succeed": false,
+        "total_time": 0.6224656105041504,
+        "number_of_steps": 201,
+        "number_of_moves": 11306,
+        "remained_distance": 498,
+        "start_distance": 1900
+    },
+    "universe_bgradiation_00000_20x20_40_139.instance.json": {
+        "succeed": false,
+        "total_time": 0.38317394256591797,
+        "number_of_steps": 201,
+        "number_of_moves": 7388,
+        "remained_distance": 349,
+        "start_distance": 1027
+    },
+    "galaxy_cluster_00002_20x20_50_200.instance.json": {
+        "succeed": false,
+        "total_time": 0.7440383434295654,
+        "number_of_steps": 201,
+        "number_of_moves": 13928,
+        "remained_distance": 238,
+        "start_distance": 1033
+    },
+    "galaxy_cluster_00001_20x20_80_172.instance.json": {
+        "succeed": false,
+        "total_time": 0.770524263381958,
+        "number_of_steps": 201,
+        "number_of_moves": 15362,
+        "remained_distance": 135,
+        "start_distance": 150
+    },
+    "galaxy_cluster2_00001_20x20_50_200.instance.json": {
+        "succeed": false,
+        "total_time": 0.8487679958343506,
+        "number_of_steps": 201,
+        "number_of_moves": 14949,
+        "remained_distance": 572,
+        "start_distance": 1523
+    },
+    "microbes_00001_20x20_50_200.instance.json": {
+        "succeed": false,
+        "total_time": 0.9327001571655273,
+        "number_of_steps": 201,
+        "number_of_moves": 15768,
+        "remained_distance": 365,
+        "start_distance": 891
+    },
+    "buffalo_001_25x25_40_174.instance.json": {
+        "succeed": false,
+        "total_time": 0.9594895839691162,
+        "number_of_steps": 201,
+        "number_of_moves": 16152,
+        "remained_distance": 529,
+        "start_distance": 977
+    },
+    "london_night_00001_20x20_60_240.instance.json": {
+        "succeed": false,
+        "total_time": 1.4232349395751953,
+        "number_of_steps": 201,
+        "number_of_moves": 22050,
+        "remained_distance": 578,
+        "start_distance": 1077
+    },
+    "buffalo_free_001_25x25_40_250.instance.json": {
+        "succeed": false,
+        "total_time": 1.0401933193206787,
+        "number_of_steps": 201,
+        "number_of_moves": 18194,
+        "remained_distance": 756,
+        "start_distance": 1805
+    },
+    "galaxy_cluster2_00002_20x20_75_251.instance.json": {
+        "succeed": false,
+        "total_time": 1.7002654075622559,
+        "number_of_steps": 201,
+        "number_of_moves": 25567,
+        "remained_distance": 201,
+        "start_distance": 242
+    },
+    "algae_00001_20x20_75_278.instance.json": {
+        "succeed": false,
+        "total_time": 1.7912025451660156,
+        "number_of_steps": 201,
+        "number_of_moves": 25509,
+        "remained_distance": 182,
+        "start_distance": 261
+    },
+    "galaxy_cluster2_00003_50x50_25_625.instance.json": {
+        "succeed": false,
+        "total_time": 2.340427875518799,
+        "number_of_steps": 201,
+        "number_of_moves": 36304,
+        "remained_distance": 865,
+        "start_distance": 15588
+    },
+    "redblue_00001_50x50_30_531.instance.json": {
+        "succeed": false,
+        "total_time": 3.7651383876800537,
+        "number_of_steps": 201,
+        "number_of_moves": 55686,
+        "remained_distance": 8842,
+        "start_distance": 21123
+    },
+    "buffalo_free_002_60x60_20_720.instance.json": {
+        "succeed": false,
+        "total_time": 3.557936191558838,
+        "number_of_steps": 201,
+        "number_of_moves": 46768,
+        "remained_distance": 435,
+        "start_distance": 27117
+    },
+    "buffalo_002_60x60_20_702.instance.json": {
+        "succeed": false,
+        "total_time": 4.5822343826293945,
+        "number_of_steps": 201,
+        "number_of_moves": 62966,
+        "remained_distance": 2574,
+        "start_distance": 17632
+    },
+    "galaxy_cluster2_00004_50x50_30_679.instance.json": {
+        "succeed": false,
+        "total_time": 3.473296642303467,
+        "number_of_steps": 201,
+        "number_of_moves": 50467,
+        "remained_distance": 2129,
+        "start_distance": 20639
+    },
+    "redblue_00003_50x50_30_750.instance.json": {
+        "succeed": false,
+        "total_time": 4.2435009479522705,
+        "number_of_steps": 201,
+        "number_of_moves": 58665,
+        "remained_distance": 2280,
+        "start_distance": 21981
+    },
+    "galaxy_cluster_00005_50x50_30_750.instance.json": {
+        "succeed": false,
+        "total_time": 3.9326071739196777,
+        "number_of_steps": 201,
+        "number_of_moves": 58435,
+        "remained_distance": 1355,
+        "start_distance": 23023
+    },
+    "galaxy_cluster_00003_50x50_30_669.instance.json": {
+        "succeed": false,
+        "total_time": 4.473515272140503,
+        "number_of_steps": 201,
+        "number_of_moves": 62187,
+        "remained_distance": 4212,
+        "start_distance": 20375
+    },
+    "sun_00001_50x50_40_571.instance.json": {
+        "succeed": false,
+        "total_time": 5.9051127433776855,
+        "number_of_steps": 201,
+        "number_of_moves": 66167,
+        "remained_distance": 15031,
+        "start_distance": 16482
+    },
+    "galaxy_cluster_00004_50x50_30_750.instance.json": {
+        "succeed": false,
+        "total_time": 4.763422012329102,
+        "number_of_steps": 201,
+        "number_of_moves": 58430,
+        "remained_distance": 1599,
+        "start_distance": 20821
+    },
+    "redblue_00002_50x50_30_669.instance.json": {
+        "succeed": false,
+        "total_time": 5.838268280029297,
+        "number_of_steps": 201,
+        "number_of_moves": 70976,
+        "remained_distance": 8933,
+        "start_distance": 17274
+    },
+    "algae_00002_50x50_40_720.instance.json": {
+        "succeed": false,
+        "total_time": 6.40583872795105,
+        "number_of_steps": 201,
+        "number_of_moves": 74507,
+        "remained_distance": 15360,
+        "start_distance": 23524
+    },
+    "universe_bgradiation_00001_50x50_40_740.instance.json": {
+        "succeed": false,
+        "total_time": 7.026231050491333,
+        "number_of_steps": 201,
+        "number_of_moves": 73517,
+        "remained_distance": 14093,
+        "start_distance": 26506
+    },
+    "buffalo_003_40x40_60_776.instance.json": {
+        "succeed": false,
+        "total_time": 7.2881598472595215,
+        "number_of_steps": 201,
+        "number_of_moves": 79399,
+        "remained_distance": 1008,
+        "start_distance": 1094
+    },
+    "galaxy_cluster2_00005_50x50_50_860.instance.json": {
+        "succeed": false,
+        "total_time": 8.256949424743652,
+        "number_of_steps": 201,
+        "number_of_moves": 89930,
+        "remained_distance": 25066,
+        "start_distance": 25864
+    },
+    "london_night_00002_50x50_50_825.instance.json": {
+        "succeed": false,
+        "total_time": 7.054490804672241,
+        "number_of_steps": 201,
+        "number_of_moves": 88413,
+        "remained_distance": 9466,
+        "start_distance": 9980
+    },
+    "universe_bgradiation_00002_50x50_40_914.instance.json": {
+        "succeed": false,
+        "total_time": 7.272938251495361,
+        "number_of_steps": 201,
+        "number_of_moves": 92202,
+        "remained_distance": 11014,
+        "start_distance": 22718
+    },
+    "microbes_00002_50x50_40_958.instance.json": {
+        "succeed": false,
+        "total_time": 7.565857887268066,
+        "number_of_steps": 201,
+        "number_of_moves": 91624,
+        "remained_distance": 12938,
+        "start_distance": 28419
+    },
+    "london_night_00003_50x50_40_961.instance.json": {
+        "succeed": false,
+        "total_time": 8.541405200958252,
+        "number_of_steps": 201,
+        "number_of_moves": 89043,
+        "remained_distance": 16179,
+        "start_distance": 26849
+    },
+    "algae_00003_50x50_40_969.instance.json": {
+        "succeed": false,
+        "total_time": 7.445594072341919,
+        "number_of_steps": 201,
+        "number_of_moves": 86634,
+        "remained_distance": 10267,
+        "start_distance": 31344
+    },
+    "sun_00003_50x50_40_1000.instance.json": {
+        "succeed": false,
+        "total_time": 8.032546281814575,
+        "number_of_steps": 201,
+        "number_of_moves": 95139,
+        "remained_distance": 10947,
+        "start_distance": 22643
+    },
+    "sun_00002_50x50_40_1000.instance.json": {
+        "succeed": false,
+        "total_time": 8.526018857955933,
+        "number_of_steps": 201,
+        "number_of_moves": 92329,
+        "remained_distance": 14760,
+        "start_distance": 33342
+    },
+    "universe_bgradiation_00003_50x50_40_1000.instance.json": {
+        "succeed": false,
+        "total_time": 7.496016979217529,
+        "number_of_steps": 201,
+        "number_of_moves": 87896,
+        "remained_distance": 10571,
+        "start_distance": 29931
+    },
+    "clouds_00003_50x50_40_1000.instance.json": {
+        "succeed": false,
+        "total_time": 7.280778884887695,
+        "number_of_steps": 201,
+        "number_of_moves": 87478,
+        "remained_distance": 10647,
+        "start_distance": 32952
+    },
+    "clouds_00001_50x50_40_912.instance.json": {
+        "succeed": false,
+        "total_time": 8.56737995147705,
+        "number_of_steps": 201,
+        "number_of_moves": 89176,
+        "remained_distance": 12655,
+        "start_distance": 20928
+    },
+    "clouds_00002_50x50_40_963.instance.json": {
+        "succeed": false,
+        "total_time": 8.11373519897461,
+        "number_of_steps": 201,
+        "number_of_moves": 86195,
+        "remained_distance": 12738,
+        "start_distance": 30971
+    },
+    "redblue_00005_50x50_45_1125.instance.json": {
+        "succeed": false,
+        "total_time": 11.521119356155396,
+        "number_of_steps": 201,
+        "number_of_moves": 102927,
+        "remained_distance": 20544,
+        "start_distance": 26957
+    },
+    "redblue_00004_50x50_45_1125.instance.json": {
+        "succeed": false,
+        "total_time": 9.956818342208862,
+        "number_of_steps": 201,
+        "number_of_moves": 103650,
+        "remained_distance": 20413,
+        "start_distance": 29346
+    },
+    "algae_00004_50x50_50_1113.instance.json": {
+        "succeed": false,
+        "total_time": 10.021581649780273,
+        "number_of_steps": 201,
+        "number_of_moves": 112924,
+        "remained_distance": 9327,
+        "start_distance": 11250
+    },
+    "microbes_00004_50x50_50_1250.instance.json": {
+        "succeed": false,
+        "total_time": 10.9952552318573,
+        "number_of_steps": 201,
+        "number_of_moves": 115846,
+        "remained_distance": 15420,
+        "start_distance": 17057
+    },
+    "london_night_00004_50x50_50_1250.instance.json": {
+        "succeed": false,
+        "total_time": 12.229316234588623,
+        "number_of_steps": 201,
+        "number_of_moves": 118377,
+        "remained_distance": 16138,
+        "start_distance": 16534
+    },
+    "microbes_00003_50x50_60_1186.instance.json": {
+        "succeed": false,
+        "total_time": 11.12440276145935,
+        "number_of_steps": 201,
+        "number_of_moves": 116808,
+        "remained_distance": 4159,
+        "start_distance": 4125
+    },
+    "buffalo_004_60x60_40_1404.instance.json": {
+        "succeed": false,
+        "total_time": 15.440099239349365,
+        "number_of_steps": 201,
+        "number_of_moves": 133110,
+        "remained_distance": 37571,
+        "start_distance": 51882
+    },
+    "buffalo_free_003_60x60_40_1440.instance.json": {
+        "succeed": false,
+        "total_time": 11.66972303390503,
+        "number_of_steps": 201,
+        "number_of_moves": 131512,
+        "remained_distance": 7818,
+        "start_distance": 15662
+    },
+    "sun_00004_50x50_75_1707.instance.json": {
+        "succeed": false,
+        "total_time": 17.821290254592896,
+        "number_of_steps": 201,
+        "number_of_moves": 164891,
+        "remained_distance": 590,
+        "start_distance": 466
+    },
+    "universe_bgradiation_00004_50x50_80_1721.instance.json": {
+        "succeed": false,
+        "total_time": 19.004657745361328,
+        "number_of_steps": 201,
+        "number_of_moves": 162785,
+        "remained_distance": 4338,
+        "start_distance": 1895
+    },
+    "clouds_00004_50x50_75_1745.instance.json": {
+        "succeed": false,
+        "total_time": 17.960782051086426,
+        "number_of_steps": 201,
+        "number_of_moves": 161979,
+        "remained_distance": 1729,
+        "start_distance": 1806
+    },
+    "microbes_00005_50x50_75_1818.instance.json": {
+        "succeed": false,
+        "total_time": 19.3561270236969,
+        "number_of_steps": 201,
+        "number_of_moves": 170779,
+        "remained_distance": 811,
+        "start_distance": 768
+    },
+    "algae_00005_50x50_75_1875.instance.json": {
+        "succeed": false,
+        "total_time": 20.007819890975952,
+        "number_of_steps": 201,
+        "number_of_moves": 172835,
+        "remained_distance": 1194,
+        "start_distance": 1283
+    },
+    "london_night_00005_50x50_75_1875.instance.json": {
+        "succeed": false,
+        "total_time": 19.165826082229614,
+        "number_of_steps": 201,
+        "number_of_moves": 172822,
+        "remained_distance": 3456,
+        "start_distance": 3395
+    },
+    "sun_00005_50x50_75_1875.instance.json": {
+        "succeed": false,
+        "total_time": 19.283263683319092,
+        "number_of_steps": 201,
+        "number_of_moves": 175366,
+        "remained_distance": 1098,
+        "start_distance": 698
+    },
+    "clouds_00005_50x50_75_1875.instance.json": {
+        "succeed": false,
+        "total_time": 19.303273677825928,
+        "number_of_steps": 201,
+        "number_of_moves": 171206,
+        "remained_distance": 2144,
+        "start_distance": 1693
+    },
+    "universe_bgradiation_00005_50x50_80_2000.instance.json": {
+        "succeed": false,
+        "total_time": 21.426735162734985,
+        "number_of_steps": 201,
+        "number_of_moves": 183226,
+        "remained_distance": 872,
+        "start_distance": 833
+    },
+    "galaxy_cluster2_00006_100x100_20_2000.instance.json": {
+        "succeed": false,
+        "total_time": 28.202284574508667,
+        "number_of_steps": 201,
+        "number_of_moves": 195507,
+        "remained_distance": 18819,
+        "start_distance": 115440
+    },
+    "buffalo_free_004_60x60_60_2160.instance.json": {
+        "succeed": false,
+        "total_time": 22.60846257209778,
+        "number_of_steps": 201,
+        "number_of_moves": 196380,
+        "remained_distance": 12596,
+        "start_distance": 11805
+    },
+    "london_night_00006_100x100_25_2394.instance.json": {
+        "succeed": false,
+        "total_time": 40.2054181098938,
+        "number_of_steps": 201,
+        "number_of_moves": 240151,
+        "remained_distance": 55948,
+        "start_distance": 145968
+    },
+    "microbes_00006_100x100_25_2500.instance.json": {
+        "succeed": false,
+        "total_time": 38.49511694908142,
+        "number_of_steps": 201,
+        "number_of_moves": 265042,
+        "remained_distance": 37085,
+        "start_distance": 154491
+    },
+    "clouds_00006_100x100_25_2374.instance.json": {
+        "succeed": false,
+        "total_time": 28.269078254699707,
+        "number_of_steps": 201,
+        "number_of_moves": 249749,
+        "remained_distance": 40270,
+        "start_distance": 91039
+    },
+    "galaxy_cluster_00007_100x100_30_2871.instance.json": {
+        "succeed": false,
+        "total_time": 46.13485836982727,
+        "number_of_steps": 201,
+        "number_of_moves": 298006,
+        "remained_distance": 75916,
+        "start_distance": 145112
+    },
+    "galaxy_cluster_00006_100x100_30_2850.instance.json": {
+        "succeed": false,
+        "total_time": 48.34070944786072,
+        "number_of_steps": 201,
+        "number_of_moves": 313054,
+        "remained_distance": 71868,
+        "start_distance": 175467
+    },
+    "galaxy_cluster2_00007_100x100_30_2878.instance.json": {
+        "succeed": false,
+        "total_time": 45.99630045890808,
+        "number_of_steps": 201,
+        "number_of_moves": 300852,
+        "remained_distance": 71325,
+        "start_distance": 158010
+    },
+    "redblue_00007_100x100_30_2894.instance.json": {
+        "succeed": false,
+        "total_time": 43.9188346862793,
+        "number_of_steps": 201,
+        "number_of_moves": 314484,
+        "remained_distance": 82067,
+        "start_distance": 143313
+    },
+    "redblue_00006_100x100_30_2778.instance.json": {
+        "succeed": false,
+        "total_time": 49.23375916481018,
+        "number_of_steps": 201,
+        "number_of_moves": 301057,
+        "remained_distance": 110118,
+        "start_distance": 157302
+    },
+    "galaxy_cluster2_00008_100x100_30_3000.instance.json": {
+        "succeed": false,
+        "total_time": 51.00621199607849,
+        "number_of_steps": 201,
+        "number_of_moves": 302398,
+        "remained_distance": 88157,
+        "start_distance": 148299
+    },
+    "redblue_00008_100x100_30_3000.instance.json": {
+        "succeed": false,
+        "total_time": 40.66463565826416,
+        "number_of_steps": 201,
+        "number_of_moves": 343679,
+        "remained_distance": 60628,
+        "start_distance": 114348
+    },
+    "universe_bgradiation_00006_100x100_30_3000.instance.json": {
+        "succeed": false,
+        "total_time": 54.8388147354126,
+        "number_of_steps": 201,
+        "number_of_moves": 315560,
+        "remained_distance": 102882,
+        "start_distance": 140307
     }
 }
