@@ -12,6 +12,7 @@ class Occupied:
 
     """
 
-    def __init__(self, occupied_type, direction):
+    def __init__(self, occupied_type, direction, user_made=False):
         self.occupied_type = occupied_type
         self.direction = direction
+        self.user_made = user_made
