@@ -1,7 +1,7 @@
 {
     "small_000_10x10_20_10.instance.json": {
         "succeed": true,
-        "total_time": 0.009938716888427734,
+        "total_time": 0.011967182159423828,
         "number_of_steps": 43,
         "number_of_moves": 154,
         "remained_distance": 0,
@@ -9,7 +9,7 @@
     },
     "small_free_000_10x10_30_30.instance.json": {
         "succeed": true,
-        "total_time": 0.011968612670898438,
+        "total_time": 0.016956567764282227,
         "number_of_steps": 23,
         "number_of_moves": 269,
         "remained_distance": 0,
@@ -17,7 +17,7 @@
     },
     "small_free_001_10x10_40_40.instance.json": {
         "succeed": true,
-        "total_time": 0.05388474464416504,
+        "total_time": 0.04887032508850098,
         "number_of_steps": 86,
         "number_of_moves": 802,
         "remained_distance": 0,
@@ -25,7 +25,7 @@
     },
     "the_king_94.instance.json": {
         "succeed": true,
-        "total_time": 0.24135446548461914,
+        "total_time": 0.21146321296691895,
         "number_of_steps": 111,
         "number_of_moves": 3413,
         "remained_distance": 0,
@@ -33,7 +33,7 @@
     },
     "socg2021_108.instance.json": {
         "succeed": true,
-        "total_time": 0.3071553707122803,
+        "total_time": 0.21339631080627441,
         "number_of_steps": 112,
         "number_of_moves": 3362,
         "remained_distance": 0,
@@ -41,15 +41,15 @@
     },
     "election_109.instance.json": {
         "succeed": true,
-        "total_time": 0.2433779239654541,
-        "number_of_steps": 136,
-        "number_of_moves": 4054,
+        "total_time": 0.2523229122161865,
+        "number_of_steps": 170,
+        "number_of_moves": 4172,
         "remained_distance": 0,
         "start_distance": 2333
     },
     "small_free_004_20x20_20_80.instance.json": {
         "succeed": true,
-        "total_time": 0.09477686882019043,
+        "total_time": 0.0907289981842041,
         "number_of_steps": 39,
         "number_of_moves": 1462,
         "remained_distance": 0,
@@ -57,7 +57,7 @@
     },
     "small_free_005_20x20_20_80.instance.json": {
         "succeed": true,
-        "total_time": 0.10475301742553711,
+        "total_time": 0.11170125007629395,
         "number_of_steps": 95,
         "number_of_moves": 1632,
         "remained_distance": 0,
@@ -65,7 +65,7 @@
     },
     "small_006_20x20_20_71.instance.json": {
         "succeed": true,
-        "total_time": 0.13364291191101074,
+        "total_time": 0.12662816047668457,
         "number_of_steps": 155,
         "number_of_moves": 2007,
         "remained_distance": 0,
@@ -73,15 +73,15 @@
     },
     "galaxy_cluster_00000_20x20_20_80.instance.json": {
         "succeed": true,
-        "total_time": 0.09276962280273438,
+        "total_time": 0.0927889347076416,
         "number_of_steps": 84,
-        "number_of_moves": 1441,
+        "number_of_moves": 1427,
         "remained_distance": 0,
         "start_distance": 950
     },
     "galaxy_cluster2_00000_20x20_20_80.instance.json": {
         "succeed": true,
-        "total_time": 0.1117396354675293,
+        "total_time": 0.11669087409973145,
         "number_of_steps": 79,
         "number_of_moves": 1956,
         "remained_distance": 0,
@@ -89,7 +89,7 @@
     },
     "buffalo_free_000_25x25_20_125.instance.json": {
         "succeed": true,
-        "total_time": 0.19448304176330566,
+        "total_time": 0.19245314598083496,
         "number_of_steps": 143,
         "number_of_moves": 3005,
         "remained_distance": 0,
@@ -97,10 +97,18 @@
     },
     "medium_free_000_30x30_20_180.instance.json": {
         "succeed": true,
-        "total_time": 0.39095306396484375,
+        "total_time": 0.3759937286376953,
         "number_of_steps": 141,
         "number_of_moves": 5654,
         "remained_distance": 0,
         "start_distance": 3846
+    },
+    "small_001_10x10_40_30.instance.json": {
+        "succeed": true,
+        "total_time": 0.47868871688842773,
+        "number_of_steps": 64,
+        "number_of_moves": 592,
+        "remained_distance": 0,
+        "start_distance": 381
     }
 }
