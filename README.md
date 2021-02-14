@@ -26,6 +26,13 @@ The algorithm is based on the following building blocks:
 3. Learning the board by the robots in motion
 
 ## videos of our solutions:
+https://youtu.be/LoD7Hch49YA
+
+https://www.youtube.com/watch?v=g6EsXaMI1Ew&ab_channel=ofekm
+
+https://www.youtube.com/watch?v=S7ZRIharfiM&ab_channel=ofekm
+
+https://www.youtube.com/watch?v=60XMVvIUq94&ab_channel=ofekm
 
 
 ## Credits
