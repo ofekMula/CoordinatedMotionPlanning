@@ -26,3 +26,4 @@ class Robot:
         self.self_block = list()
         self.stuck_count = 0
         self.way_blocked_special = list()
+        self.memory_steps = defaultdict(int)

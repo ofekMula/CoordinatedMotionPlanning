@@ -281,13 +281,25 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
         else:
             robot.path = []
 
+    first_dir, first_cond = RIGHT, False
+    if sum([go_right, go_up, go_left, go_down]) == 2:
+        up_count = (robot.memory_steps[(robot.current_pos, UP)], UP, go_up)
+        down_count = (robot.memory_steps[(robot.current_pos, DOWN)], DOWN, go_down)
+        right_count = (robot.memory_steps[(robot.current_pos, RIGHT)], RIGHT, go_right)
+        left_count = (robot.memory_steps[(robot.current_pos, LEFT)], LEFT, go_left)
+        next_dir = list(filter(lambda t: t[2], [up_count, down_count, right_count, left_count]))
+        if next_dir[0][0] < next_dir[1][0]:
+            first_dir, first_cond = next_dir[0][1], True
+        elif next_dir[0][0] > next_dir[1][0]:
+            first_dir, first_cond = next_dir[1][1], True
     for go_condition, go_direction in zip(
-            [condition_direction_mapping[robot.last_move_direction], go_right, go_up, go_left, go_down],
-            [robot.last_move_direction, RIGHT, UP, LEFT, DOWN]):
+            [first_cond, condition_direction_mapping[robot.last_move_direction], go_right, go_up, go_left, go_down],
+            [first_dir, robot.last_move_direction, RIGHT, UP, LEFT, DOWN]):
         if go_condition:
             next_pos = utils.calc_next_pos(robot.current_pos, go_direction)
             if is_step_valid(robot, go_direction, invalid_positions):
                 if next_pos != robot.prev_pos and is_way_not_blocked(robot, next_pos, go_direction):
+                    robot.memory_steps[(robot.current_pos, go_direction)] += 1
                     return next_pos, go_direction
             if next_pos in invalid_positions and invalid_positions[next_pos].direction is not None:
                 stay = True
@@ -595,7 +607,7 @@ def main(custom_file=None, dirs=tuple(), do_all=False):
         files = [file_name for file_name in os.listdir(path) if
                  file_name.endswith('.json') and (
                          file_name not in metadata.keys() or custom_file == file_name or do_all)]
-        for file_name in tqdm.tqdm(sorted(files, key=lambda n: os.path.getsize(f'{path}/{n}'))):
+        for file_name in tqdm.tqdm(sorted(files, key=lambda n: os.path.getsize(f'{path}/{n}'))[:15]):
             if custom_file and file_name != custom_file:
                 continue
             root_log.info(f'Solving {file_name}')
@@ -608,9 +620,9 @@ def main(custom_file=None, dirs=tuple(), do_all=False):
 
 
 if __name__ == "__main__":
-    # main('medium_free_002_30x30_20_180.instance.json', ['../tests/inputs'])
+    # main('small_free_003_10x10_70_70.instance.json', ['../tests/inputs/all/uniform'])
     main(None, ['../tests/inputs'], do_all=True)
-    main('small_001_10x10_40_30.instance.json', ['../tests/inputs/all/uniform'])
-
-    # main('galaxy_cluster2_00000_20x20_20_80.instance.json',
+    # main('small_001_10x10_40_30.instance.json', ['../tests/inputs/all/uniform'])
+    #
+    # main(None,
     #      ['../tests/inputs', '../tests/inputs/all/manual', '../tests/inputs/all/uniform', '../tests/inputs/all/images'])
