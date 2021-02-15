@@ -113,11 +113,11 @@
     },
     "small_002_10x10_60_33.instance.json": {
         "succeed": true,
-        "total_time": 0.19545507431030273,
-        "number_of_steps": 107,
-        "number_of_moves": 1061,
+        "total_time": 0.781757116317749,
+        "number_of_steps": 98,
+        "number_of_moves": 903,
         "remained_distance": 0,
-        "start_distance": 0
+        "start_distance": 131
     },
     "small_free_002_10x10_50_50.instance.json": {
         "succeed": false,
