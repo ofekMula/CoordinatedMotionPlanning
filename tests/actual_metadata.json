@@ -128,10 +128,10 @@
         "start_distance": 455
     },
     "small_003_10x10_90_46.instance.json": {
-        "succeed": false,
-        "total_time": 1.5499765872955322,
-        "number_of_steps": 251,
-        "number_of_moves": 1643,
+        "succeed": true,
+        "total_time": 1.4035959243774414,
+        "number_of_steps": 107,
+        "number_of_moves": 1455,
         "remained_distance": 0,
         "start_distance": 93
     },

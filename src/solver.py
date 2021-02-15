@@ -352,7 +352,7 @@ def calc_robot_next_step(robot, invalid_positions, stuck, stuck_robots, step_num
                     if is_way_not_blocked(robot, next_pos, go_direction):
                         return next_pos, go_direction
 
-        if len(valid_directions) == 1:
+        if len(valid_directions) == 1 and robot.current_pos != robot.target_pos:
             return utils.calc_next_pos(robot.current_pos, valid_directions[0]), valid_directions[0]
 
         # cur_blocked_directions = get_all_blocked_directions(robot, blocked_permanent)
@@ -497,6 +497,9 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
             invalid_positions[right_robot.current_pos] = Occupied(TEMPORARY_OCCUPIED, None)
             right_robot.way_blocked = []
             right_robot.self_block = []
+            right_robot.prev_pos = None
+        else:
+            right_robot.stuck_count -= 1
     for left_robot in left_robots:
         left_robot_start_pos = left_robot.current_pos
         left_robot_target_pos = left_robot.target_pos
@@ -511,6 +514,9 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
             invalid_positions[left_robot.current_pos] = Occupied(TEMPORARY_OCCUPIED, None)
             left_robot.way_blocked = []
             left_robot.self_block = []
+            left_robot.prev_pos = None
+        else:
+            left_robot.stuck_count -= 1
     for up_robot in up_robots:
         up_robot_start_pos = up_robot.current_pos
         up_robot_target_pos = up_robot.target_pos
@@ -525,6 +531,9 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
             invalid_positions[up_robot.current_pos] = Occupied(TEMPORARY_OCCUPIED, None)
             up_robot.way_blocked = []
             up_robot.self_block = []
+            up_robot.prev_pos = None
+        else:
+            up_robot.stuck_count -= 1
     for down_robot in down_robots:
         down_robot_start_pos = down_robot.current_pos
         down_robot_target_pos = down_robot.target_pos
@@ -539,6 +548,9 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
             invalid_positions[down_robot.current_pos] = Occupied(TEMPORARY_OCCUPIED, None)
             down_robot.way_blocked = []
             down_robot.self_block = []
+            down_robot.prev_pos = None
+        else:
+            down_robot.stuck_count -= 1
     return total_moves
 
 
@@ -565,6 +577,26 @@ def solve(infile: str, outfile: str, level=ERROR):
         stuck_robots = []
 
         for robot in robots:
+            condition = (abs_distance(robot.target_pos, robot.current_pos) == 3 and
+                         (utils.calc_next_pos(robot.target_pos, RIGHT) in invalid_positions and
+                          utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, RIGHT), RIGHT) in invalid_positions
+                          or utils.calc_next_pos(robot.target_pos, RIGHT) in obstacles or
+                          utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, RIGHT), RIGHT) in obstacles)
+                         and (utils.calc_next_pos(robot.target_pos, LEFT) in invalid_positions and
+                          utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, LEFT), LEFT) in invalid_positions
+                          or utils.calc_next_pos(robot.target_pos, LEFT) in obstacles or
+                          utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, LEFT), LEFT) in obstacles)
+                         and (utils.calc_next_pos(robot.target_pos, DOWN) in invalid_positions and
+                          utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, DOWN), DOWN) in invalid_positions
+                          or utils.calc_next_pos(robot.target_pos, DOWN) in obstacles or
+                          utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, DOWN), DOWN) in obstacles)
+                         and (utils.calc_next_pos(robot.target_pos, UP) in invalid_positions and
+                              utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, UP), UP) in invalid_positions
+                              or utils.calc_next_pos(robot.target_pos, UP) in obstacles or
+                              utils.calc_next_pos(utils.calc_next_pos(robot.target_pos, UP), UP) in obstacles))
+            if condition:
+                log.critical(f'CONDITION {robot.index}')
+
             blocked_count = sum([
                 utils.calc_next_pos(robot.target_pos, RIGHT) in invalid_positions and
                 invalid_positions[utils.calc_next_pos(robot.target_pos, RIGHT)].occupied_type == PERMANENT_OCCUPIED,
@@ -574,10 +606,10 @@ def solve(infile: str, outfile: str, level=ERROR):
                 invalid_positions[utils.calc_next_pos(robot.target_pos, UP)].occupied_type == PERMANENT_OCCUPIED,
                 utils.calc_next_pos(robot.target_pos, DOWN) in invalid_positions and
                 invalid_positions[utils.calc_next_pos(robot.target_pos, DOWN)].occupied_type == PERMANENT_OCCUPIED])
-            if blocked_count == 4 and abs_distance(robot.current_pos, robot.target_pos) == 2:
+            if blocked_count == 4 and (abs_distance(robot.current_pos, robot.target_pos) == 2 or condition):
                 log.critical(f'EXPLODE id={robot.index}')
                 robot.stuck_count = 777
-            elif abs_distance(robot.current_pos, robot.target_pos) == 2 and \
+            elif (abs_distance(robot.current_pos, robot.target_pos) == 2 or condition) and \
                     blocked_count == 3 and lock_explode_v2 is None \
                     and not calc_sp(step_number, robot, invalid_positions)[1]:
                 log.critical(f'EXPLODE V2 id={robot.index}')
@@ -628,8 +660,9 @@ def solve(infile: str, outfile: str, level=ERROR):
             robot.prev_pos = None
             robot.way_blocked = []
             robot.self_block = []
-            total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, False,
-                                  robots_dsts)
+            if robot.current_pos != robot.target_pos:
+                total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,
+                                      robots_dsts)
         turn_robots = [robot for robot in robots if
                        robot not in (stuck_hard_robots + right_robots + up_robots + down_robots + left_robots)]
         for robot in turn_robots:  # move each robot accordingly to its priority
@@ -640,9 +673,10 @@ def solve(infile: str, outfile: str, level=ERROR):
             if robot.current_pos != robot.target_pos:
                 total_moves, _ = turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots, True,
                                       robots_dsts)
-        robots = [r for r in stuck_hard_robots] + [r for r in robots if
-                                                   r not in stuck_robots and r not in stuck_hard_robots] + \
-                 [r for r in stuck_robots if r not in stuck_hard_robots]
+        sides_robots = [r for r in right_robots + up_robots + down_robots + left_robots]
+        robots = sides_robots + [r for r in stuck_hard_robots] + \
+                 [r for r in robots if r not in stuck_robots and r not in stuck_hard_robots and r not in sides_robots] + \
+                 [r for r in stuck_robots if r not in stuck_hard_robots and r not in sides_robots]
         clean_invalid_position(invalid_positions)
         step_number += 1
 
