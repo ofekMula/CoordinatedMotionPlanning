@@ -465,6 +465,7 @@ def turn(robot, invalid_positions, steps, step_number, total_moves, stuck_robots
             stuck_robots.append(robot)
         else:
             robot.stuck_count += 1
+            log.warn(f'Robot {robot.index} stuck_count={robot.stuck_count}')
     return total_moves, next_direction
 
 
@@ -489,7 +490,7 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
         right_robot.target_pos = utils.calc_next_pos(right_robot_start_pos, RIGHT)
         explode_nearby(right_robot.current_pos, invalid_positions, robots)
         total_moves, direct = turn(right_robot, invalid_positions, steps, step_number, total_moves,
-                                   stuck_robots, False, robots_dsts)
+                                   stuck_robots, True, robots_dsts)
         right_robot.target_pos = right_robot_target_pos
         if right_robot.current_pos != right_robot_start_pos:
             invalid_positions[right_robot_start_pos] = Occupied(TEMPORARY_OCCUPIED, direct)
@@ -503,7 +504,7 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
         left_robot.target_pos = utils.calc_next_pos(left_robot_start_pos, LEFT)
         explode_nearby(left_robot.current_pos, invalid_positions, robots)
         total_moves, direct = turn(left_robot, invalid_positions, steps, step_number, total_moves,
-                                   stuck_robots, False, robots_dsts)
+                                   stuck_robots, True, robots_dsts)
         left_robot.target_pos = left_robot_target_pos
         if left_robot.current_pos != left_robot_start_pos:
             invalid_positions[left_robot_start_pos] = Occupied(TEMPORARY_OCCUPIED, direct)
@@ -517,7 +518,7 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
         up_robot.target_pos = utils.calc_next_pos(up_robot_start_pos, UP)
         explode_nearby(up_robot.current_pos, invalid_positions, robots)
         total_moves, direct = turn(up_robot, invalid_positions, steps, step_number, total_moves,
-                                   stuck_robots, False, robots_dsts)
+                                   stuck_robots, True, robots_dsts)
         up_robot.target_pos = up_robot_target_pos
         if up_robot.current_pos != up_robot_start_pos:
             invalid_positions[up_robot_start_pos] = Occupied(TEMPORARY_OCCUPIED, direct)
@@ -531,7 +532,7 @@ def explode_position(robot_pos, right_robots, left_robots, up_robots, down_robot
         down_robot.target_pos = utils.calc_next_pos(down_robot_start_pos, DOWN)
         explode_nearby(down_robot.current_pos, invalid_positions, robots)
         total_moves, direct = turn(down_robot, invalid_positions, steps, step_number, total_moves,
-                                   stuck_robots, False, robots_dsts)
+                                   stuck_robots, True, robots_dsts)
         down_robot.target_pos = down_robot_target_pos
         if down_robot.current_pos != down_robot_start_pos:
             invalid_positions[down_robot_start_pos] = Occupied(TEMPORARY_OCCUPIED, direct)
@@ -683,7 +684,7 @@ def main(custom_file=None, dirs=tuple(), do_all=False):
 
 
 if __name__ == "__main__":
-    main('small_002_10x10_60_33.instance.json', ['../tests/inputs/all/uniform'])
+    main('small_003_10x10_90_46.instance.json', ['../tests/inputs/all/uniform'])
     # main(None, ['../tests/inputs'], do_all=True)
     # main('small_001_10x10_40_30.instance.json', ['../tests/inputs/all/uniform'])
     #
