@@ -33,6 +33,7 @@ This year participated 30 teams around the world.
 We took the 15th place. https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2021/#ranking
 Team's name : "fast mode".
 
+https://github.com/ofekMula/CoordinatedMotionPlanning/blob/master/score.png
 
 ## Credits
 CG:SHOP2021 - the annual computational geometric competition:
