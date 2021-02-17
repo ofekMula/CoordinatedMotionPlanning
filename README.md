@@ -28,6 +28,11 @@ The algorithm is based on the following building blocks:
 ## Videos of our solutions:
 https://www.youtube.com/watch?v=QF5qkH1iSA0&feature=youtu.be&ab_channel=%D7%90%D7%95%D7%A4%D7%99%D7%A8%D7%98%D7%99%D7%99%D7%91
 
+## Competition
+This year participated 30 teams around the world.
+We took the 15th place. https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2021/#ranking
+Team's name : "fast mode".
+
 
 ## Credits
 CG:SHOP2021 - the annual computational geometric competition:
